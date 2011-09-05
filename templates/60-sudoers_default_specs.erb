@@ -1,0 +1,15 @@
+
+# Defaults specification
+#
+# Disable "ssh hostname sudo <cmd>", because it will show the password in clear. 
+#         You have to run "ssh -t hostname sudo <cmd>".
+#
+Defaults    requiretty
+<% if has_variable?("sudo_mailto") -%>
+Defaults    mailto=<%= sudo_mailto %>
+<% end -%>
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE"
