@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPLv3
 #
-# Time-stamp: <Mon 2011-09-05 11:17 svarrette>
+# Time-stamp: <Tue 2011-09-06 22:41 svarrette>
 # ------------------------------------------------------------------------------
 # = Class: sudo::params
 #
@@ -79,6 +79,10 @@ class sudo::params {
         default => 'root',
     }
 
+    # name of the exec resource responsible for checking the syntax of the sudoers
+    # file
+    $check_syntax_name = 'sudoers-check-syntax'
+    
     $cmdalias_pkgmanager = $::operatingsystem ? {
         /(?i-mx:ubuntu|debian)/	       => [ '/usr/bin/apt-get' ],
         /(?i-mx:centos|fedora|redhat)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],

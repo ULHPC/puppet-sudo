@@ -127,7 +127,7 @@ class sudo::common {
     }
 
     #notice("sudoversion = $sudoversion")
-    
+
     if versioncmp($sudoversion,'1.7.1') > 0 {
         #
         # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
@@ -150,6 +150,13 @@ class sudo::common {
 
     }
 
+    # check the syntax of the sudoers files
+    exec {"${sudo::params::check_syntax_name}":
+        path      => "/usr/bin:/usr/sbin:/bin",
+        command   => "visudo -c -f ${sudo::params::configfile}",
+        returns   => 0,
+        logoutput => 'on_failure',
+    }
 
 
 }
