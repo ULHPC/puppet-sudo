@@ -1,15 +1,13 @@
-# File::      <tt>sudo-alias-user.pp</tt>
+# File::      <tt>sudo-alias-command.pp</tt>
 # Author::    Sebastien Varrette (<Sebastien.Varrette@uni.lu>)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette (www[http://varrette.gforge.uni.lu])
 # License::   GPLv3
 #
 # ------------------------------------------------------------------------------
-# = Define: sudo::alias::user
+# = Define: sudo::alias::command
 #
-# Permits to define a user alias in the sudoers files (directive User_Alias)
-# These aren't often necessary, as you can use regular groups
-# (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
-# rather than USERALIAS
+# Permits to define a command alias in the sudoers files (directive Cmnd_Alias)
+# These are groups of related commands...
 #
 # == Pre-requisites
 #
@@ -17,17 +15,19 @@
 #
 # == Parameters:
 #
-# [*userlist*]
-#  List of users to add in the definition of the alias
+# [*commandlist*]
+#  List of commands to add in the definition of the alias
 #
 # == Examples
 #
-#    sudo::alias::user{ 'ADMINS':
-#          userlist => [ 'jsmith', 'mikem' ]
+#    sudo::alias::command{ 'NETWORKING':
+#          cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
 #    }
 #
 #    This will create the following entry in the sudoers files:
-#    User_Alias ADMINS = jsmith, mikem
+#
+#    ## Networking
+#    Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
 #
 # == Warnings
 #
@@ -36,7 +36,7 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::alias::user($userlist = []) {
+define sudo::alias::command($cmdlist = []) {
 
     include sudo::params
 
@@ -44,11 +44,11 @@ define sudo::alias::user($userlist = []) {
     # guid of this entry
     $groupname = $name
 
-    concat::fragment { "sudoers_user_aliases_${groupname}":
+    concat::fragment { "sudoers_ommand_aliases_${groupname}":
         target  => "${sudo::params::configfile}",
-        content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
+        content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
         ensure  => "${sudo::ensure}",
-        order   => 25,
+        order   => 45,
     }
     
 }
