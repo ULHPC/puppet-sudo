@@ -49,6 +49,7 @@ define sudo::alias::user($userlist = []) {
         content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
         ensure  => "${sudo::ensure}",
         order   => 25,
+        notify  => Exec["${sudo::params::check_syntax_name}"],
     }
     
 }

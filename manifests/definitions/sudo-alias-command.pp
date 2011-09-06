@@ -49,6 +49,7 @@ define sudo::alias::command($cmdlist = []) {
         content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
         ensure  => "${sudo::ensure}",
         order   => 45,
+        notify  => Exec["${sudo::params::check_syntax_name}"],
     }
     
 }
