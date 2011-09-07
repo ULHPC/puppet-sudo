@@ -19,13 +19,22 @@
 #
 # == Examples
 #
-#    sudo::defaults::spec{ 'keep_LC':
-#          content => "Defaults env_keep = \"LC_TIME LC_ALL LANGUAGE\""
+#        sudo::defaults::spec { 'env_keep':
+#        content => "
+#Defaults    env_reset
+#Defaults    env_keep =  \"COLORS DISPLAY HOSTNAME LS_COLORS\"
+#Defaults    env_keep += \"MAIL PS1 PS2 USERNAME LANG LC_ADDRESS LC_CTYPE\"
+#Defaults    env_keep += \"LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES\"
+#Defaults    env_keep += \"LC_TIME LC_ALL LANGUAGE\"\n",
 #    }
 #
 #    This will create the following entry in the sudoers files:
 #
-#    Defaults env_keep = "LC_TIME LC_ALL LANGUAGE"
+#    Defaults    env_reset
+#    Defaults    env_keep =  "COLORS DISPLAY HOSTNAME LS_COLORS"
+#    Defaults    env_keep += "MAIL PS1 PS2 USERNAME LANG LC_ADDRESS LC_CTYPE"
+#    Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+#    Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE"
 #
 # == Warnings
 #
