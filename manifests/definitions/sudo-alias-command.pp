@@ -44,14 +44,17 @@ define sudo::alias::command($cmdlist = []) {
     # guid of this entry
     $groupname = $name
 
-    concat::fragment { "sudoers_ommand_aliases_${groupname}":
-        target  => "${sudo::params::configfile}",
-        content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
-        ensure  => "${sudo::ensure}",
-        order   => 45,
-        notify  => Exec["${sudo::params::check_syntax_name}"],
+    if $sudo::ensure == 'present' {
+
+        concat::fragment { "sudoers_ommand_aliases_${groupname}":
+            target  => "${sudo::params::configfile}",
+            content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
+            ensure  => "${sudo::ensure}",
+            order   => 45,
+            notify  => Exec["${sudo::params::check_syntax_name}"],
+        }
+
     }
-    
 }
 
 

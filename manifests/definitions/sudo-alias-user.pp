@@ -44,14 +44,17 @@ define sudo::alias::user($userlist = []) {
     # guid of this entry
     $groupname = $name
 
-    concat::fragment { "sudoers_user_aliases_${groupname}":
-        target  => "${sudo::params::configfile}",
-        content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
-        ensure  => "${sudo::ensure}",
-        order   => 25,
-        notify  => Exec["${sudo::params::check_syntax_name}"],
+    if $sudo::ensure == 'present' {
+
+        concat::fragment { "sudoers_user_aliases_${groupname}":
+            target  => "${sudo::params::configfile}",
+            content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
+            ensure  => "${sudo::ensure}",
+            order   => 25,
+            notify  => Exec["${sudo::params::check_syntax_name}"],
+        }
+
     }
-    
 }
 
 

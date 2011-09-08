@@ -67,37 +67,51 @@ define sudo::directive($content='', $source='') {
     }
 
     if versioncmp($sudoversion,'1.7.2') < 0 {
-        concat::fragment { "sudoers_directive_${dname}":
-            target  => "${sudo::params::configfile}",
-            ensure  => "${sudo::ensure}",
-            order   => 65,
-            content => $real_content,
-            source  => $real_source,
-            notify  => Exec["${sudo::params::check_syntax_name}"],
+        if $sudo::ensure == 'present' {
+            concat::fragment { "sudoers_directive_${dname}":
+                target  => "${sudo::params::configfile}",
+                ensure  => "${sudo::ensure}",
+                order   => 65,
+                content => $real_content,
+                source  => $real_source,
+                notify  => Exec["${sudo::params::check_syntax_name}"],
+            }
         }
     }
     else
     {
-        #
-        # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
-        #
-        file {"${sudo::params::configdir}/${dname}":
-            ensure  => "${sudo::ensure}",
-            owner   => "${sudo::params::configfile_owner}",
-            group   => "${sudo::params::configfile_group}",
-            mode    => "${sudo::params::configfile_mode}",
-            content => $real_content,
-            source  => $real_source,
-            notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
-            require => Package['sudo'],
-        }
 
-        # check the syntax of the created files, delete it if the syntax is wrong
-        exec {"${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}":
-            path      => "/usr/bin:/usr/sbin:/bin",
-            command   => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
-            returns   => 0,
-            logoutput => 'on_failure',
+        if $sudo::ensure == 'present' {
+
+            #
+            # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
+            #
+            file {"${sudo::params::configdir}/${dname}":
+                ensure  => "${sudo::ensure}",
+                owner   => "${sudo::params::configfile_owner}",
+                group   => "${sudo::params::configfile_group}",
+                mode    => "${sudo::params::configfile_mode}",
+                content => $real_content,
+                source  => $real_source,
+                notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
+                require => File["${sudo::params::configdir}"],
+                #Package['sudo'],
+            }
+
+            # check the syntax of the created files, delete it if the syntax is wrong
+            exec {"${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}":
+                path      => "/usr/bin:/usr/sbin:/bin",
+                command   => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
+                returns   => 0,
+                logoutput => 'on_failure',
+            }
+
+        }
+        else
+        {
+            file {"${sudo::params::configdir}/${dname}":
+                ensure  => 'absent',
+            }
         }
     }
 

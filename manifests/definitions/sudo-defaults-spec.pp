@@ -59,7 +59,7 @@ define sudo::defaults::spec($content='', $source='') {
     # $name is provided by define invocation
     # guid of this entry
     $defaultname = $name
-    
+
     # if content is passed, use that, else if source is passed use that
     case $content {
         '': {
@@ -73,15 +73,18 @@ define sudo::defaults::spec($content='', $source='') {
         default: { $real_content = $content }
     }
 
-    concat::fragment { "sudoers_defaults_spec_${defaultname}":
-        target  => "${sudo::params::configfile}",
-        ensure  => "${sudo::ensure}",
-        order   => 65,
-        content => $real_content,
-        source  => $real_source,
-        notify  => Exec["${sudo::params::check_syntax_name}"],
-    }
+    if $sudo::ensure == 'present' {
 
+        concat::fragment { "sudoers_defaults_spec_${defaultname}":
+            target  => "${sudo::params::configfile}",
+            ensure  => "${sudo::ensure}",
+            order   => 65,
+            content => $real_content,
+            source  => $real_source,
+            notify  => Exec["${sudo::params::check_syntax_name}"],
+        }
+
+    }
 }
 
 
