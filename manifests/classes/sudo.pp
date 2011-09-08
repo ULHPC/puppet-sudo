@@ -98,7 +98,7 @@ class sudo::common {
             owner   => "${sudo::params::configfile_owner}",
             group   => "${sudo::params::configfile_group}",
             mode    => "${sudo::params::configfile_mode}",
-            backup  => 'main',
+            #backup  => 'main',
             #require => Exec["backup ${sudo::params::configfile}"],
             #Package['sudo'],
             #content => template("sudo/sudoconf.erb"),
