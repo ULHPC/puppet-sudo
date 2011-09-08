@@ -35,7 +35,9 @@
 #
 # == Examples
 #
-#        sudo::directive
+#        sudo::directive {'admin_users':
+#           content => "%admin ALL=(ALL) ALL\n",
+#        }
 #
 #
 # == Warnings
@@ -80,7 +82,8 @@ define sudo::directive($content='', $source='') {
     }
     else
     {
-
+        # here sudo version >= 1.7.2
+        
         if $sudo::ensure == 'present' {
 
             #
