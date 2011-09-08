@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPLv3
 #
-# Time-stamp: <Tue 2011-09-06 22:41 svarrette>
+# Time-stamp: <Wed 2011-09-07 22:07 svarrette>
 # ------------------------------------------------------------------------------
 # = Class: sudo::params
 #
@@ -50,7 +50,11 @@ class sudo::params {
     $configfile = $::operatingsystem ? {
         default => '/etc/sudoers',
     }
-
+    # backup of the main configuration file
+    $backupconfigfile = $::operatingsystem ? {
+        default => '/etc/.sudoers.puppet-save-orig',
+    }
+ 
     $configfile_mode = $::operatingsystem ? {
         default => '0440',
     }
