@@ -69,7 +69,7 @@ class sudo::common {
     #     'absent' => 'purged',
     #     default  => $sudo::ensure
     # }
-    notice("sudo::ensure = $sudo::ensure")
+    #notice("sudo::ensure = $sudo::ensure")
     package { 'sudo':
         name    => "${sudo::params::packagename}",
         ensure  => "${sudo::ensure}",
