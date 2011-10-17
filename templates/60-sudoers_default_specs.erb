@@ -4,7 +4,7 @@
 # Disable "ssh hostname sudo <cmd>", because it will show the password in clear. 
 #         You have to run "ssh -t hostname sudo <cmd>".
 #
-Defaults    requiretty
+# Defaults    requiretty
 <% if has_variable?("sudo_mailto") -%>
 Defaults    mailto = <%= sudo_mailto %>
 <% end -%>
