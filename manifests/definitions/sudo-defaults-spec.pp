@@ -14,6 +14,10 @@
 #
 # == Parameters:
 #
+# [*ensure*]
+#   default to 'present', can be 'absent' 
+#   Default: 'present'
+#
 # [*content*]
 #  Specify the contents of the Defaults directive as a string. Newlines, tabs,
 #  and spaces can be specified using the escaped syntax (e.g., \n for a newline)
@@ -52,13 +56,26 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::defaults::spec($content='', $source='') {
+define sudo::defaults::spec(
+    $content='',
+    $source='',
+    $ensure  = 'present'
+) {
 
     include sudo::params
 
     # $name is provided by define invocation
     # guid of this entry
     $defaultname = $name
+
+    if ! ($ensure in [ 'present', 'absent' ]) {
+        fail("sudo::defaults::spec 'ensure' parameter must be set to either 'absent', or 'present'")
+    }
+    if ($sudo::ensure != $ensure) {
+        if ($sudo::ensure != 'present') {
+            fail("Cannot configure the sudo default spec '${defaultname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
+        }
+    }
 
     # if content is passed, use that, else if source is passed use that
     case $content {

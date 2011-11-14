@@ -17,6 +17,10 @@
 #
 # == Parameters:
 #
+# [*ensure*]
+#   default to 'present', can be 'absent'
+#   Default: 'present'
+#
 # [*userlist*]
 #  List of users to add in the definition of the alias
 #
@@ -36,25 +40,35 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::alias::user($userlist = []) {
-
+define sudo::alias::user(
+    $userlist = [],
+    $ensure  = 'present'
+)
+{
     include sudo::params
 
     # $name is provided by define invocation
     # guid of this entry
     $groupname = $name
 
-    if $sudo::ensure == 'present' {
-
-        concat::fragment { "sudoers_user_aliases_${groupname}":
-            target  => "${sudo::params::configfile}",
-            content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
-            ensure  => "${sudo::ensure}",
-            order   => 25,
-            notify  => Exec["${sudo::params::check_syntax_name}"],
-        }
-
+    if ! ($ensure in [ 'present', 'absent' ]) {
+        fail("sudo::alias::user 'ensure' parameter must be set to either 'absent', or 'present'")
     }
+    if ($sudo::ensure != $ensure) {
+        if ($sudo::ensure != 'present') {
+            fail("Cannot configure the sudo user alias '${groupname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
+        }
+    }
+
+    concat::fragment { "sudoers_user_aliases_${groupname}":
+        target  => "${sudo::params::configfile}",
+        content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
+        ensure  => "${ensure}",
+        order   => 25,
+        notify  => Exec["${sudo::params::check_syntax_name}"],
+    }
+
+
 }
 
 

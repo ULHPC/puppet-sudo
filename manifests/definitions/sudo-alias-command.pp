@@ -15,6 +15,11 @@
 #
 # == Parameters:
 #
+# [*ensure*]
+#   default to 'present', can be 'absent' (BEWARE: it will remove the associated
+#   file)
+#   Default: 'present'
+#
 # [*commandlist*]
 #  List of commands to add in the definition of the alias
 #
@@ -36,7 +41,11 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::alias::command($cmdlist = []) {
+define sudo::alias::command(
+    $cmdlist = [],
+    $ensure  = 'present'
+)
+{
 
     include sudo::params
 
@@ -44,17 +53,23 @@ define sudo::alias::command($cmdlist = []) {
     # guid of this entry
     $groupname = $name
 
-    if $sudo::ensure == 'present' {
-
-        concat::fragment { "sudoers_ommand_aliases_${groupname}":
-            target  => "${sudo::params::configfile}",
-            content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
-            ensure  => "${sudo::ensure}",
-            order   => 45,
-            notify  => Exec["${sudo::params::check_syntax_name}"],
-        }
-
+    if ! ($ensure in [ 'present', 'absent' ]) {
+        fail("sudo::alias::command 'ensure' parameter must be set to either 'absent', or 'present'")
     }
+    if ($sudo::ensure != $ensure) {
+        if ($sudo::ensure != 'present') {
+            fail("Cannot configure the sudo alias '${groupname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
+        }
+    }
+
+    concat::fragment { "sudoers_command_aliases_${groupname}":
+        target  => "${sudo::params::configfile}",
+        content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
+        ensure  => "${ensure}",
+        order   => 45,
+        notify  => Exec["${sudo::params::check_syntax_name}"],
+    }
+
 }
 
 
