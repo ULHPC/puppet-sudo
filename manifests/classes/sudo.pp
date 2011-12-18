@@ -98,11 +98,12 @@ class sudo::common {
             owner   => "${sudo::params::configfile_owner}",
             group   => "${sudo::params::configfile_group}",
             mode    => "${sudo::params::configfile_mode}",
+            require => Package['sudo'],
             #backup  => 'main',
             #require => Exec["backup ${sudo::params::configfile}"],
             #Package['sudo'],
             #content => template("sudo/sudoconf.erb"),
-            #notify  => Service['sudo'],
+            notify  => Exec["${sudo::params::check_syntax_name}"]
         }
 
         # Header of the file
