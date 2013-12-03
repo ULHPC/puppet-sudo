@@ -172,11 +172,12 @@ class sudo::common {
 
         # check the syntax of the sudoers files
         exec {"${sudo::params::check_syntax_name}":
-            path      => "/usr/bin:/usr/sbin:/bin",
-            command   => "visudo -c -f ${sudo::params::configfile}",
-            returns   => 0,
-            onlyif    => "test \"${sudo::ensure}\" == \"present\"",
-            logoutput => 'on_failure',
+            path        => "/usr/bin:/usr/sbin:/bin",
+            command     => "visudo -c -f ${sudo::params::configfile}",
+            returns     => 0,
+            onlyif      => "test \"${sudo::ensure}\" == \"present\"",
+            refreshonly => true,
+            logoutput   => 'on_failure',
         }
 
     }

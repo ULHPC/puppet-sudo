@@ -117,10 +117,11 @@ define sudo::directive(
         if $sudo::ensure == 'present' {
             # check the syntax of the created files, delete it if the syntax is wrong
             exec {"${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}":
-                path      => "/usr/bin:/usr/sbin:/bin",
-                command   => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
-                returns   => 0,
-                logoutput => 'on_failure',
+                path        => "/usr/bin:/usr/sbin:/bin",
+                command     => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
+                returns     => 0,
+                logoutput   => 'on_failure',
+                refreshonly => true
             }
 
         }
