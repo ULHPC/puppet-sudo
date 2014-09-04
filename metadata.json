@@ -14,6 +14,10 @@
     {
       "name": "puppetlabs-stdlib",
       "version_range": ">= 1.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": "1.x"
     }
   ],
   "operatingsystem_support": [
@@ -25,5 +29,22 @@
       ]
     }
   ],
-  "tags": ["sudo", "sudoers", "security"]
+  "tags": [
+    "sudo",
+    "sudoers",
+    "security"
+  ],
+  "classes": [
+    "sudo::params",
+    "sudo",
+    "sudo::common",
+    "sudo::debian",
+    "sudo::redhat"
+  ],
+  "definitions": [
+    "sudo::alias::command",
+    "sudo::alias::user",
+    "sudo::defaults::spec",
+    "sudo::directive"
+  ]
 }
