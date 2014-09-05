@@ -1,4 +1,4 @@
-# File::      <tt>sudo-defaults_spec.pp</tt>
+# File::      <tt>spec.pp</tt>
 # Author::    Sebastien Varrette (<Sebastien.Varrette@uni.lu>)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette (www[http://varrette.gforge.uni.lu])
 # License::   GPLv3
