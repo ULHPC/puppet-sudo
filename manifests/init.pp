@@ -1,4 +1,4 @@
-# File::      <tt>sudo.pp</tt>
+# File::      <tt>init.pp</tt>
 # Author::    Sebastien Varrette (Sebastien.Varrette@uni.lu)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPL v3

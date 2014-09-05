@@ -1,9 +1,9 @@
-# File::      <tt>sudo-params.pp</tt>
+# File::      <tt>params.pp</tt>
 # Author::    Sebastien Varrette (Sebastien.Varrette@uni.lu)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPLv3
 #
-# Time-stamp: <Wed 2011-09-07 22:07 svarrette>
+# Time-stamp: <Ven 2014-09-05 11:51 svarrette>
 # ------------------------------------------------------------------------------
 # = Class: sudo::params
 #
