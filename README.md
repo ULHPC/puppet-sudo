@@ -166,6 +166,44 @@ These elements are detailed on [`doc/contributing.md`](doc/contributing.md)
 You are more than welcome to contribute to its development by 
 [sending a pull request](https://help.github.com/articles/using-pull-requests). 
 
+## Tests on Vagrant box
+
+The best way to test this module in a non-intrusive way is to rely on
+[Vagrant](http://www.vagrantup.com/). The `Vagrantfile` at the root of the
+repository pilot the provisioning of the vagrant box and relies on boxes
+generated through my [vagrant-vms](https://github.com/falkor/vagrant-vms)
+repository.  
+Once cloned, run 
+
+      $> rake packer:Debian:init
+      
+To create a template. Select the version matching the once mentioned on the
+`Vagrantfile` (`7.6.0-amd64` for instance)
+Then run 
+
+      $> rake packer:Debian:build
+      
+This shall generate the vagrant box `debian-7.6.0-amd64.box` that you can then
+add to your box lists: 
+
+      $> vagrant box add debian-7.6.0-amd64  packer/debian-7.6.0-amd64/debian-7.6.0-amd64.box
+
+Now you can run `vagrant up` from this repository to boot the VM, provision it
+to be ready to test this module (see the [`.vagrant_init.rb`](.vagrant_init.rb)
+script). For instance, you can test the manifests of the `tests/` directory
+within the VM: 
+
+      $> vagrant ssh 
+      [...]
+      (vagrant)$> sudo puppet apply -t /vagrant/tests/init.pp
+      
+From now on, you can test (with `--noop`) the other manifests. For instance: 
+
+      (vagrant)$> sudo puppet apply -t --noop /vagrant/tests/directive.pp 
+
+Run `vagrant halt` (or `vagrant destroy`) to stop (or kill) the VM once you've
+finished to play with it. 
+
 ## Resources
 
 ### Git 
