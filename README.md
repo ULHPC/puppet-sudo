@@ -8,7 +8,7 @@
 
 Configure and manage sudo and sudoers files
 
-      Copyright (c) 2014 S. Varrette, H. Cartiaux, V. Plugaru <hpc-sysadmins@uni.lu>
+      Copyright (c) 2011-2014 S. Varrette, H. Cartiaux, V. Plugaru <hpc-sysadmins@uni.lu>
       
 
 * [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
@@ -36,7 +36,7 @@ See [`metadata.json`](metadata.json). In particular, this module depends on
 
 ## General Parameters
 
-See [manifests/classes/sudo-params.pp](manifests/classes/sudo-params.pp)
+See [manifests/params.pp](manifests/params.pp)
 
 ## Overview and Usage
 

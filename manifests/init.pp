@@ -91,10 +91,10 @@ class sudo::common {
         # Package['sudo'] -> Exec["backup ${sudo::params::configfile}"]
         # #-> Concat["${sudo::params::configfile}"]
 
-        include concat::setup
+        #include concat::setup -- Now deprecated
 
         concat { "${sudo::params::configfile}":
-            warn    => true,
+            warn    => true,  
             owner   => "${sudo::params::configfile_owner}",
             group   => "${sudo::params::configfile_group}",
             mode    => "${sudo::params::configfile_mode}",

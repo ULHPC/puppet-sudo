@@ -10,6 +10,6 @@
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
 
-node default { 
+node default {
     include sudo
 }
