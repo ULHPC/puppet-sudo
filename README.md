@@ -104,14 +104,14 @@ This definition accepts the following parameters:
 
 Example: 
 
-     sudo::alias::command{ 'NETWORKING':
+     sudo::alias::command{ 'NETWORK':
           cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
      }
 
 This will create the following entry in the sudoers files:
 
      ## Networking
-     Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
+     Cmnd_Alias NETWORK = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
 
 ### definition `sudo::alias::user`
 
