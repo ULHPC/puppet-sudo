@@ -6,7 +6,7 @@
 # ------------------------------------------------------------------------------
 # = Define: sudo::defaults::spec
 #
-# Permits to define a defaultd specifications
+# Permits to define a default specifications
 #
 # == Pre-requisites
 #
