@@ -86,14 +86,14 @@ define sudo::directive(
         default: { $real_content = $content }
     }
 
-    if versioncmp($sudoversion,'1.7.2') < 0 {
+    if versioncmp($::sudoversion,'1.7.2') < 0 {
         concat::fragment { "sudoers_directive_${dname}":
-            target  => "${sudo::params::configfile}",
-            ensure  => "${ensure}",
+            ensure  => $ensure,
+            target  => $sudo::params::configfile,
             order   => 65,
             content => $real_content,
             source  => $real_source,
-            notify  => Exec["${sudo::params::check_syntax_name}"],
+            notify  => Exec[$sudo::params::check_syntax_name],
         }
     }
     else
@@ -103,21 +103,21 @@ define sudo::directive(
         # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
         #
         file {"${sudo::params::configdir}/${dname}":
-            ensure  => "${ensure}",
-            owner   => "${sudo::params::configfile_owner}",
-            group   => "${sudo::params::configfile_group}",
-            mode    => "${sudo::params::configfile_mode}",
+            ensure  => $ensure,
+            owner   => $sudo::params::configfile_owner,
+            group   => $sudo::params::configfile_group,
+            mode    => $sudo::params::configfile_mode,
             content => $real_content,
             source  => $real_source,
             notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
-            require => File["${sudo::params::configdir}"],
+            require => File[$sudo::params::configdir],
             #Package['sudo'],
         }
 
         if $sudo::ensure == 'present' {
             # check the syntax of the created files, delete it if the syntax is wrong
             exec {"${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}":
-                path        => "/usr/bin:/usr/sbin:/bin",
+                path        => '/usr/bin:/usr/sbin:/bin',
                 command     => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
                 returns     => 0,
                 logoutput   => 'on_failure',

@@ -93,12 +93,12 @@ define sudo::defaults::spec(
     if $sudo::ensure == 'present' {
 
         concat::fragment { "sudoers_defaults_spec_${defaultname}":
-            target  => "${sudo::params::configfile}",
-            ensure  => "${sudo::ensure}",
+            ensure  => $sudo::ensure,
+            target  => $sudo::params::configfile,
             order   => 65,
             content => $real_content,
             source  => $real_source,
-            notify  => Exec["${sudo::params::check_syntax_name}"],
+            notify  => Exec[$sudo::params::check_syntax_name],
         }
 
     }
