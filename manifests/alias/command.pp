@@ -1,4 +1,4 @@
-# File::      <tt>sudo-alias-command.pp</tt>
+# File::      <tt>command.pp</tt>
 # Author::    Sebastien Varrette (<Sebastien.Varrette@uni.lu>)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette (www[http://varrette.gforge.uni.lu])
 # License::   GPLv3
@@ -64,7 +64,7 @@ define sudo::alias::command(
 
     concat::fragment { "sudoers_command_aliases_${groupname}":
         target  => "${sudo::params::configfile}",
-        content => inline_template("## <%= groupname.capitalize %>\nCmnd_Alias <%= groupname.upcase %> = <%= cmdlist.join(', ') %>\n"),
+        content => inline_template("## <%= @groupname.capitalize %>\nCmnd_Alias <%= @groupname.upcase %> = <%= @cmdlist.join(', ') %>\n"),
         ensure  => "${ensure}",
         order   => 45,
         notify  => Exec["${sudo::params::check_syntax_name}"],

@@ -3,12 +3,12 @@
 # Sudo Puppet Module 
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
-[![License](http://img.shields.io/:license-apache2.0-blue.svg)](LICENSE)
+[![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
 
 Configure and manage sudo and sudoers files
 
-      Copyright (c) 2014 S. Varrette, H. Cartiaux, V. Plugaru <hpc-sysadmins@uni.lu>
+      Copyright (c) 2011-2014 S. Varrette, H. Cartiaux, V. Plugaru <hpc-sysadmins@uni.lu>
       
 
 * [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
@@ -36,7 +36,7 @@ See [`metadata.json`](metadata.json). In particular, this module depends on
 
 ## General Parameters
 
-See [manifests/classes/sudo-params.pp](manifests/classes/sudo-params.pp)
+See [manifests/params.pp](manifests/params.pp)
 
 ## Overview and Usage
 
@@ -104,14 +104,14 @@ This definition accepts the following parameters:
 
 Example: 
 
-     sudo::alias::command{ 'NETWORKING':
+     sudo::alias::command{ 'NETWORK':
           cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
      }
 
 This will create the following entry in the sudoers files:
 
      ## Networking
-     Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
+     Cmnd_Alias NETWORK = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
 
 ### definition `sudo::alias::user`
 
@@ -165,6 +165,44 @@ These elements are detailed on [`doc/contributing.md`](doc/contributing.md)
 
 You are more than welcome to contribute to its development by 
 [sending a pull request](https://help.github.com/articles/using-pull-requests). 
+
+## Tests on Vagrant box
+
+The best way to test this module in a non-intrusive way is to rely on
+[Vagrant](http://www.vagrantup.com/). The `Vagrantfile` at the root of the
+repository pilot the provisioning of the vagrant box and relies on boxes
+generated through my [vagrant-vms](https://github.com/falkor/vagrant-vms)
+repository.  
+Once cloned, run 
+
+      $> rake packer:Debian:init
+      
+To create a template. Select the version matching the once mentioned on the
+`Vagrantfile` (`7.6.0-amd64` for instance)
+Then run 
+
+      $> rake packer:Debian:build
+      
+This shall generate the vagrant box `debian-7.6.0-amd64.box` that you can then
+add to your box lists: 
+
+      $> vagrant box add debian-7.6.0-amd64  packer/debian-7.6.0-amd64/debian-7.6.0-amd64.box
+
+Now you can run `vagrant up` from this repository to boot the VM, provision it
+to be ready to test this module (see the [`.vagrant_init.rb`](.vagrant_init.rb)
+script). For instance, you can test the manifests of the `tests/` directory
+within the VM: 
+
+      $> vagrant ssh 
+      [...]
+      (vagrant)$> sudo puppet apply -t /vagrant/tests/init.pp
+      
+From now on, you can test (with `--noop`) the other manifests. For instance: 
+
+      (vagrant)$> sudo puppet apply -t --noop /vagrant/tests/directive.pp 
+
+Run `vagrant halt` (or `vagrant destroy`) to stop (or kill) the VM once you've
+finished to play with it. 
 
 ## Resources
 
