@@ -9,7 +9,17 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
+#
+# You can execute this manifest as follows in your vagrant box:
+#
+#      sudo puppet apply -t /vagrant/tests/init.pp
+#
 
 node default {
     include sudo
+
+    sudo::directive {'vagrant':
+        content => "vagrant ALL=NOPASSWD:ALL\n"
+    }
+
 }
