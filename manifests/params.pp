@@ -3,7 +3,7 @@
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPLv3
 #
-# Time-stamp: <Ven 2014-09-05 11:51 svarrette>
+# Time-stamp: <Ven 2014-09-05 21:43 svarrette>
 # ------------------------------------------------------------------------------
 # = Class: sudo::params
 #
@@ -31,9 +31,9 @@ class sudo::params {
     ###########################################
 
     # ensure the presence (or absence) of sudo
-    $ensure = $sudo_ensure ? {
+    $ensure = $::sudo_ensure ? {
         ''      => 'present',
-        default => "${sudo_ensure}"
+        default => $::sudo_ensure
     }
 
     #### MODULE INTERNAL VARIABLES  #########
@@ -54,7 +54,7 @@ class sudo::params {
     $backupconfigfile = $::operatingsystem ? {
         default => '/etc/.sudoers.puppet-save-orig',
     }
- 
+    
     $configfile_mode = $::operatingsystem ? {
         default => '0440',
     }
@@ -88,7 +88,7 @@ class sudo::params {
     $check_syntax_name = 'sudoers-check-syntax'
     
     $cmdalias_pkgmanager = $::operatingsystem ? {
-        /(?i-mx:ubuntu|debian)/	       => [ '/usr/bin/apt-get' ],
+        /(?i-mx:ubuntu|debian)/         => [ '/usr/bin/apt-get' ],
         /(?i-mx:centos|fedora|redhat)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
         default => []
     }

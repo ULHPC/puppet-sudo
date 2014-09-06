@@ -15,14 +15,15 @@
 
 include 'sudo::params'
 
-$names = [ 'packagename', 'configfile', 'backupconfigfile',
-           'configfile_mode', 'configfile_owner', 'configfile_group',
-           'configdir', 'configdir_mode', 'configdir_group',
-           'check_syntax_name', 'cmdalias_pkgmanager'
-           ]
+$names = [
+          'packagename', 'configfile', 'backupconfigfile',
+          'configfile_mode', 'configfile_owner', 'configfile_group',
+          'configdir', 'configdir_mode', 'configdir_group',
+          'check_syntax_name', 'cmdalias_pkgmanager'
+          ]
 
 each($names) |$v| {
     $var = "sudo::params::${v}"
-    notice("${var} = ", inline_template("<%= scope.lookupvar(@var) %>"))
+    notice("${var} = ", inline_template('<%= scope.lookupvar(@var) %>'))
 }
 

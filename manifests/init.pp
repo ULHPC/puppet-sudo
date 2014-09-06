@@ -49,7 +49,7 @@ class sudo( $ensure = $sudo::params::ensure ) inherits sudo::params
         debian, ubuntu:         { include sudo::debian }
         redhat, fedora, centos: { include sudo::redhat }
         default: {
-            fail("Module $module_name is not supported on $operatingsystem")
+            fail("Module ${module_name} is not supported on ${::operatingsystem}")
         }
     }
 }
@@ -71,8 +71,8 @@ class sudo::common {
     # }
     #notice("sudo::ensure = $sudo::ensure")
     package { 'sudo':
-        name    => "${sudo::params::packagename}",
-        ensure  => "${sudo::ensure}",
+        ensure => $sudo::ensure,
+        name   => $sudo::params::packagename,
     }
 
     if ($sudo::ensure == 'present') {
@@ -93,86 +93,86 @@ class sudo::common {
 
         #include concat::setup -- Now deprecated
 
-        concat { "${sudo::params::configfile}":
-            warn    => true,  
-            owner   => "${sudo::params::configfile_owner}",
-            group   => "${sudo::params::configfile_group}",
-            mode    => "${sudo::params::configfile_mode}",
+        concat { $sudo::params::configfile:
+            warn    => true,
+            owner   => $sudo::params::configfile_owner,
+            group   => $sudo::params::configfile_group,
+            mode    => $sudo::params::configfile_mode,
             require => Package['sudo'],
             #backup  => 'main',
             #require => Exec["backup ${sudo::params::configfile}"],
             #Package['sudo'],
             #content => template("sudo/sudoconf.erb"),
-            notify  => Exec["${sudo::params::check_syntax_name}"]
+            notify  => Exec[$sudo::params::check_syntax_name]
         }
 
         # Header of the file
-        concat::fragment { "sudoers_header":
-            target  => "${sudo::params::configfile}",
-            source  => "puppet:///modules/sudo/01-sudoers_header",
-            ensure  => "${sudo::ensure}",
-            order   => 01,
+        concat::fragment { 'sudoers_header':
+            ensure => $sudo::ensure,
+            target => $sudo::params::configfile,
+            source => 'puppet:///modules/sudo/01-sudoers_header',
+            order  => 01,
         }
 
         # Header of the User aliases
-        concat::fragment { "sudoers_user_aliases_header":
-            target  => "${sudo::params::configfile}",
-            source  => "puppet:///modules/sudo/20-sudoers_user_aliases_header",
-            ensure  => "${sudo::ensure}",
-            order   => 20,
+        concat::fragment { 'sudoers_user_aliases_header':
+            ensure => $sudo::ensure,
+            target => $sudo::params::configfile,
+            source => 'puppet:///modules/sudo/20-sudoers_user_aliases_header',
+            order  => 20,
         }
 
 
         # Header of the Command aliases
-        concat::fragment { "sudoers_command_aliases_header":
-            target  => "${sudo::params::configfile}",
-            content => template("sudo/40-sudoers_command_aliases_header.erb"),
-            ensure  => "${sudo::ensure}",
+        concat::fragment { 'sudoers_command_aliases_header':
+            ensure  => $sudo::ensure,
+            target  => $sudo::params::configfile,
+            content => template('sudo/40-sudoers_command_aliases_header.erb'),
             order   => 40,
         }
 
 
         # Header of the Defaults specs
-        concat::fragment { "sudoers_default_specs_header":
-            target  => "${sudo::params::configfile}",
-            content => template("sudo/60-sudoers_default_specs.erb"),
-            ensure  => "${sudo::ensure}",
+        concat::fragment { 'sudoers_default_specs_header':
+            ensure  => $sudo::ensure,
+            target  => $sudo::params::configfile,
+            content => template('sudo/60-sudoers_default_specs.erb'),
             order   => 60,
         }
 
 
         # Header of the main part
-        concat::fragment { "sudoers_mainheader":
-            target  => "${sudo::params::configfile}",
-            source  => "puppet:///modules/sudo/80-sudoers_main_header",
-            ensure  => "${sudo::ensure}",
-            order   => 80,
+        concat::fragment { 'sudoers_mainheader':
+            ensure => $sudo::ensure,
+            target => $sudo::params::configfile,
+            source => 'puppet:///modules/sudo/80-sudoers_main_header',
+            order  => 80,
         }
 
-        if versioncmp($sudoversion,'1.7.1') > 0 {
+        if versioncmp($::sudoversion,'1.7.1') > 0 {
             #
             # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
             #
-            concat::fragment { "sudoers_footer_includedir":
-                target  => "${sudo::params::configfile}",
+            concat::fragment { 'sudoers_footer_includedir':
+                ensure  => $sudo::ensure,
+                target  => $sudo::params::configfile,
                 content => "\n#includedir ${sudo::params::configdir}\n",
-                ensure  => "${sudo::ensure}",
                 order   => 99,
             }
 
-            file { "${sudo::params::configdir}":
+            file { $sudo::params::configdir:
                 ensure  => 'directory',
-                owner   => "${sudo::params::configdir_owner}",
-                group   => "${sudo::params::configdir_group}",
-                mode    => "${sudo::params::configdir_mode}",
+                owner   => $sudo::params::configdir_owner,
+                group   => $sudo::params::configdir_group,
+                mode    => $sudo::params::configdir_mode,
                 purge   => true,
                 recurse => true,
             }
         }
 
         # check the syntax of the sudoers files
-        exec {"${sudo::params::check_syntax_name}":
-            path        => "/usr/bin:/usr/sbin:/bin",
+        exec {$sudo::params::check_syntax_name:
+            path        => '/usr/bin:/usr/sbin:/bin',
             command     => "visudo -c -f ${sudo::params::configfile}",
             returns     => 0,
             onlyif      => "test \"${sudo::ensure}\" == \"present\"",
@@ -194,11 +194,11 @@ class sudo::common {
         # }
 
         # Delete /etc/sudoers.d if sudo version >= 1.7.2
-        if versioncmp($sudoversion,'1.7.1') > 0 {
+        if versioncmp($::sudoversion,'1.7.1') > 0 {
 
-            file { "${sudo::params::configdir}":
-                ensure  => 'absent',
-                force   => true,
+            file { $sudo::params::configdir:
+                ensure => 'absent',
+                force  => true,
                 #purge   => true,
                 #recurse => true,
                 #onlyif  => "test -d ${sudo::params::configdir}",

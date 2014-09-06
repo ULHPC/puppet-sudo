@@ -61,11 +61,11 @@ define sudo::alias::user(
     }
 
     concat::fragment { "sudoers_user_aliases_${groupname}":
-        target  => "${sudo::params::configfile}",
+        ensure  => $ensure,
+        target  => $sudo::params::configfile,
         content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
-        ensure  => "${ensure}",
         order   => 25,
-        notify  => Exec["${sudo::params::check_syntax_name}"],
+        notify  => Exec[$sudo::params::check_syntax_name],
     }
 
 
