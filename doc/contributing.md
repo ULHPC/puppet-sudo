@@ -7,24 +7,24 @@ is organized.
 
 ### Directory Layout
 
-       ULHPC-sudo/       # Main directory 
+       ULHPC/sudo/       # Main directory 
            `-- metadata.json     # Module configuration - cf [here](https://docs.puppetlabs.com/puppet/latest/reference/modules_publishing.html#write-a-metadatajson-file)
            `-- README.md         # This file
            `-- files/            # Contains static files, which managed nodes can download
            `-- lib/              # custom facts/type/provider definitions
            `-- manifests/
-                `-- init.pp      # Main manifests file
-                `-- classes/     # Hold manifest for ULHPC-sudo classes/
-                     `-- ULHPC-sudo.pp         # defines the ULHPC-sudo class
-                     `-- ULHPC-sudo-params.pp  # ULHPC-sudo module variables 
-                `-- definitions/ # Hold manifest for ULHPC-sudo definitions
-                     `-- ULHPC-sudo-mydef.pp   # defines the ULHPC-sudo::mydef definition   `-- templates/        # Module ERB template files
+                `-- init.pp      # Main manifests file which defines the sudo class 
+                `-- params.pp    # ULHPC/sudo module variables 
+                `-- mydef.pp     # defines the sudo::mydef  definition   
+           `-- templates/        # Module ERB template files
            `-- tests/            # Contains examples showing how to declare the module’s classes and defined type
-           `-- spec/             # Contains spec tests for any plugins in the lib directory
+           `-- spec/             # Contains rspec tests 
            `-- Rakefile          # Definition of the [rake](https://github.com/jimweirich/rake) tasks
            `-- .ruby-{version,gemset}   # [RVM](https://rvm.io/) configuration
            `-- Gemfile[.lock]    # [Bundler](http://bundler.io/) configuration
            `-- .git/             # Hold git configuration
+           `-- .vagrant_init.rb  # Vagrant provisionner to test this module
+           `-- Vagrantfile       # Vagrant file
 
 ### Git Branching Model
 
@@ -129,7 +129,7 @@ merge all things the way they should be.
 
 # Contributing Notes
 
-This project is released under the terms of the [apache-2.0 Licence](LICENSE). 
+This project is released under the terms of the [gpl-3.0 Licence](LICENSE). 
 So you are more than welcome to contribute to its development as follows: 
 
 1. Fork it
