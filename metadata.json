@@ -35,10 +35,10 @@
     "security"
   ],
   "classes": [
-    "sudo::params",
     "sudo",
     "sudo::common",
     "sudo::debian",
+    "sudo::params",
     "sudo::redhat"
   ],
   "definitions": [
