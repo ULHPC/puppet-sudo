@@ -31,7 +31,7 @@ notice("sudo::params::configdir_group  = ${sudo::params::configdir_group }")
 notice("sudo::params::check_syntax_name  = ${sudo::params::check_syntax_name }")
 notice("sudo::params::cmdalias_pkgmanager  = ${sudo::params::cmdalias_pkgmanager }")
 
-each($names) |$v| {
-    $var = "sudo::params::${v}"
-    notice("${var} = ", inline_template('<%= scope.lookupvar(@var) %>'))
-}
+#each($names) |$v| {
+#    $var = "sudo::params::${v}"
+#    notice("${var} = ", inline_template('<%= scope.lookupvar(@var) %>'))
+#}
