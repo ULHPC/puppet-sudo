@@ -6,17 +6,19 @@
 # errors and view a log of events) or by fully applying the test in a virtual
 # environment (to compare the resulting system state to the desired state).
 #
-# Learn more about module testing here:
+# Learn more about module testing here
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
 #
-# You can execute this manifest as follows in your vagrant box:
+# You can execute this manifest as follows in your vagrant box
 #
 #      sudo puppet apply -t /vagrant/tests/init.pp
 #
 
 node default {
-    include sudo
+    class { 'sudo':
+        configfile => '/tmp/sudoers'
+    }
 
     sudo::directive {'vagrant':
         content => "vagrant ALL=NOPASSWD:ALL\n"
