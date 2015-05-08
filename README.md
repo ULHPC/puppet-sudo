@@ -3,12 +3,12 @@
 # Sudo Puppet Module 
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
-[![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
-![Supported Platforms](http://img.shields.io/badge/platform-debian-lightgrey.svg)
+[![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
+![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
 
 Configure and manage sudo and sudoers files
 
-      Copyright (c) 2015 S. Varrette, H. Cartiaux, V. Plugaru <hpc-sysadmins@uni.lu>
+      Copyright (c) 2011-2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
       
 
 * [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
@@ -20,17 +20,17 @@ Manage sudo configuration via Puppet.
 This module implements the following elements: 
 
 * __Puppet classes__:
-    - `sudo` 
+    - `sudo`: main class 
     - `sudo::common` 
-    - `sudo::debian` 
-    - `sudo::params` 
-    - `sudo::redhat` 
+    - `sudo::common::debian`: specific implementation under Debian 
+    - `sudo::common::redhat`: specific implementation under Redhat-like system 
+    - `sudo::params`: class parameters 
 
 * __Puppet definitions__: 
-    - `sudo::alias::command` 
-    - `sudo::alias::user` 
-    - `sudo::defaults::spec` 
-    - `sudo::directive` 
+    - `sudo::alias::command`: defines a command alias in the sudoers files (directive `Cmnd_Alias`) 
+    - `sudo::alias::user`: defines a user alias in the sudoers files (directive `User_Alias`) 
+    - `sudo::defaults::spec`: defines a default specifications (directive `Defaults`) 
+    - `sudo::directive`: generic way to write sudoers configurations parts
 
 All these components are configured through a set of variables you will find in
 [`manifests/params.pp`](manifests/params.pp). 
@@ -50,99 +50,114 @@ See [`metadata.json`](metadata.json). In particular, this module depends on
 ### Class `sudo`
 
 This is the main class defined in this module.
-It accepts the following parameters: 
-
-* `$ensure`: default to 'present', can be 'absent'
-
-Use is as follows:
+Use it as follows:
 
      include ' sudo'
 
 See also [`tests/init.pp`](tests/init.pp)
 
-### Class `sudo`
+### Definition `sudo::directive`
 
-See `tests/sudo.pp`
-### Class `sudo::common`
+The definition `sudo::directive` provides a simple way to write sudo configurations parts.
+If you use a `sudo` version >= 1.7.2, the sudo directive part is validated via
+`visudo` and removed if syntax is not correct.
+This definition accepts the following parameters:
 
-See `tests/sudo/common.pp`
-### Class `sudo::debian`
+* `$ensure`: default to 'present', can be 'absent' (BEWARE: it will remove the
+  associated file) 
+* `$content`: specify the contents of the directive as a string
+* `$source`: copy a file as the content of the directive.
 
-See `tests/sudo/debian.pp`
-### Class `sudo::params`
+Example:
 
-See `tests/sudo/params.pp`
-### Class `sudo::redhat`
+      sudo::directive {'admin_users':
+           content => "%admin ALL=(ALL) ALL\n",
+      }
 
-See `tests/sudo/redhat.pp`
+On recent version of sudo, this will typically create a new file `/etc/sudoers.d/admin_users`.
+
+See also [`tests/directive.pp`](tests/directive.pp)
+
 
 ### Definition `sudo::alias::command`
 
-The definition `sudo::alias::command` provides ...
+Permits to define a command alias in the `sudoers` files (directive `Cmnd_Alias`)
+These are groups of related commands...
+
 This definition accepts the following parameters:
 
-* `$ensure`: default to 'present', can be 'absent'
-* `$content`: specify the contents of the directive as a string
-* `$source`: copy a file as the content of the directive.
+* `$ensure`: default to 'present', can be 'absent' 
+* `$commandlist`: List of commands to add in the definition of the alias
+
+Example: 
+
+     sudo::alias::command{ 'NETWORK':
+          cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
+     }
+
+This will create the following entry in the sudoers files:
+
+     ## Networking
+     Cmnd_Alias NETWORK = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
+
+See also [`tests/alias/command.pp`](tests/alias/command.pp)
+
+### definition `sudo::alias::user`
+
+Permits to define a user alias in the sudoers files (directive User_Alias)
+These aren't often necessary, as you can use regular groups
+(ie, from files, LDAP, NIS, etc) in this file - just use `%groupname`
+rather than `USERALIAS`
+
+This definition accepts the following parameters:
+
+* `$ensure`: default to 'present', can be 'absent' 
+* `$commandlist`: list of users to add in the definition of the alias
 
 Example:
 
-        sudo::alias::command { 'toto':
-		      ensure => 'present',
-        }
+      sudo::alias::user{ 'ADMINS':
+          userlist => [ 'jsmith', 'mikem' ]
+      }
 
-See also `tests/sudo/alias/command.pp`
+This will create the following entry in the `sudoers` files:
 
-### Definition `sudo::alias::user`
+      User_Alias ADMINS = jsmith, mikem
 
-The definition `sudo::alias::user` provides ...
+See also [`tests/alias/user.pp`](tests/alias/user.pp)
+
+
+### definition `sudo::defaults::spec`
+
+Permits to define a default specifications
 This definition accepts the following parameters:
 
-* `$ensure`: default to 'present', can be 'absent'
+* `$ensure`: default to 'present', can be 'absent' 
 * `$content`: specify the contents of the directive as a string
 * `$source`: copy a file as the content of the directive.
 
-Example:
+Examples
 
-        sudo::alias::user { 'toto':
-		      ensure => 'present',
-        }
+     sudo::defaults::spec { 'env_keep':
+           content => "
+      Defaults    env_reset
+      Defaults    env_keep =  \"COLORS DISPLAY HOSTNAME LS_COLORS\"
+      Defaults    env_keep += \"MAIL PS1 PS2 USERNAME LANG LC_ADDRESS LC_CTYPE\"
+      Defaults    env_keep += \"LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES\"
+      Defaults    env_keep += \"LC_TIME LC_ALL LANGUAGE\"\n",
+      }
 
-See also `tests/sudo/alias/user.pp`
+This will create the following entry in the sudoers files:
 
-### Definition `sudo::defaults::spec`
+```
+Defaults    env_reset
+Defaults    env_keep =  "COLORS DISPLAY HOSTNAME LS_COLORS"
+Defaults    env_keep += "MAIL PS1 PS2 USERNAME LANG LC_ADDRESS LC_CTYPE"
+Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE"
+```
 
-The definition `sudo::defaults::spec` provides ...
-This definition accepts the following parameters:
-
-* `$ensure`: default to 'present', can be 'absent'
-* `$content`: specify the contents of the directive as a string
-* `$source`: copy a file as the content of the directive.
-
-Example:
-
-        sudo::defaults::spec { 'toto':
-		      ensure => 'present',
-        }
-
-See also `tests/sudo/defaults/spec.pp`
-
-### Definition `sudo::directive`
-
-The definition `sudo::directive` provides ...
-This definition accepts the following parameters:
-
-* `$ensure`: default to 'present', can be 'absent'
-* `$content`: specify the contents of the directive as a string
-* `$source`: copy a file as the content of the directive.
-
-Example:
-
-        sudo::directive { 'toto':
-		      ensure => 'present',
-        }
-
-See also `tests/sudo/directive.pp`
+See also [`tests/defaults/spec.pp`](tests/defaults/spec.pp)
 
 
 ## Librarian-Puppet / R10K Setup
@@ -156,8 +171,8 @@ You can of course configure the sudo module in your `Puppetfile` to make it avai
 or, if you prefer to work on the git version: 
 
      mod "ULHPC/sudo", 
-         :git => https://github.com/ULHPC/puppet-sudo,
-         :ref => production 
+         :git => 'https://github.com/ULHPC/puppet-sudo',
+         :ref => 'production' 
 
 ## Issues / Feature request
 
