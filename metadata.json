@@ -37,12 +37,13 @@
   "classes": [
     "sudo",
     "sudo::common",
-    "sudo::debian",
-    "sudo::params",
-    "sudo::redhat"
+    "sudo::common::debian",
+    "sudo::common::redhat",
+    "sudo::params"
   ],
   "definitions": [
     "sudo::alias::command",
+    "sudo::alias::host",
     "sudo::alias::user",
     "sudo::defaults::spec",
     "sudo::directive"
