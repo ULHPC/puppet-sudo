@@ -14,13 +14,15 @@ If you want to contribute to the code, you shall be aware of the way this module
            `-- manifests/
                 `-- init.pp      # Main manifests file which defines the sudo class 
                 `-- params.pp    # ULHPC/sudo module variables 
-                `-- sudo.pp 
-                `-- common.pp 
-                `-- debian.pp 
-                `-- redhat.pp 
-                `-- alias/command.pp 
-                `-- alias/user.pp 
-                `-- defaults/spec.pp 
+                `-- common.pp
+				`-- common/
+				    `-- debian.pp
+					`-- redhat.pp 
+				`-- alias/
+				    `-- command.pp 
+					`-- /user.pp 
+				`-- defaults/
+					`-- spec.pp 
                 `-- directive.pp 
            `-- templates/        # Module ERB template files
            `-- tests/            # Contains examples showing how to declare the module’s classes and defined type
