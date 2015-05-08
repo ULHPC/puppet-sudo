@@ -78,10 +78,10 @@ class sudo::common {
 
         # Header of the Host aliases
         concat::fragment { 'sudoers_host_aliases_header':
-            ensure  => $sudo::ensure,
-            target  => $sudo::configfile,
+            ensure => $sudo::ensure,
+            target => $sudo::configfile,
             source => 'puppet:///modules/sudo/50-sudoers_host_aliases_header',
-            order   => 50,
+            order  => 50,
         }
 
         # Header of the Defaults specs
