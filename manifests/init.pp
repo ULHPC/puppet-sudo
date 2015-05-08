@@ -1,7 +1,7 @@
 # File::      <tt>init.pp</tt>
 # Author::    Sebastien Varrette (Sebastien.Varrette@uni.lu)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
-# License::   GPL v3
+# License::   GPL-3.0
 #
 # ------------------------------------------------------------------------------
 # = Class: sudo
@@ -15,6 +15,7 @@
 # == Parameters (cf sudo-params.pp)
 #
 # $ensure:: *Default*: 'present'. The Puppet ensure attribute (can be either 'present' or 'absent') - absent will ensure the sudo package is removed
+# $configfile:: *Default*: '/etc/sudoers'. The configuration file to use.
 #
 # == Requires
 #
@@ -22,12 +23,14 @@
 #
 # == Sample Usage
 #
-#     import sudo
+#     include 'sudo'
 #
 # You can then specialize the various aspects of the configuration,
 # for instance
 #
-#         class { 'sudo':  }
+#         class { 'sudo':
+#             configfile => '/tmp/sudoers'
+#         }
 #
 # == Warnings
 #
@@ -46,6 +49,11 @@ class sudo(
 
     if ! ($ensure in [ 'present', 'absent' ]) {
         fail("sudo 'ensure' parameter must be set to either 'absent' or 'present'")
+    }
+
+    $configdir = $configfile ? {
+        "${sudo::params::configfile}" => $sudo::params::configdir,
+        default                       => "${sudo::configfile}.d"
     }
 
     case $::operatingsystem {

@@ -9,7 +9,9 @@
 #   sudo puppet apply -t /vagrant/tests/alias/host.pp --noop
 #
 
-include 'sudo'
+class { 'sudo':
+    configfile => '/tmp/sudoers'
+}
 
 sudo::alias::host{ 'SERVERS':
   hostlist => [ '192.168.0.1', '192.168.0.2' ],

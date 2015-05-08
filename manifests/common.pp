@@ -48,17 +48,13 @@ class sudo::common {
             group   => $sudo::params::configfile_group,
             mode    => $sudo::params::configfile_mode,
             require => Package['sudo'],
-            #backup  => 'main',
-            #require => Exec["backup ${sudo::params::configfile}"],
-            #Package['sudo'],
-            #content => template("sudo/sudoconf.erb"),
             notify  => Exec[$sudo::params::check_syntax_name]
         }
 
         # Header of the file
         concat::fragment { 'sudoers_header':
             ensure => $sudo::ensure,
-            target => $sudo::params::configfile,
+            target => $sudo::configfile,
             source => 'puppet:///modules/sudo/01-sudoers_header',
             order  => 01,
         }
@@ -66,7 +62,7 @@ class sudo::common {
         # Header of the User aliases
         concat::fragment { 'sudoers_user_aliases_header':
             ensure => $sudo::ensure,
-            target => $sudo::params::configfile,
+            target => $sudo::configfile,
             source => 'puppet:///modules/sudo/20-sudoers_user_aliases_header',
             order  => 20,
         }
@@ -75,25 +71,31 @@ class sudo::common {
         # Header of the Command aliases
         concat::fragment { 'sudoers_command_aliases_header':
             ensure  => $sudo::ensure,
-            target  => $sudo::params::configfile,
+            target  => $sudo::configfile,
             content => template('sudo/40-sudoers_command_aliases_header.erb'),
             order   => 40,
         }
 
+        # Header of the Host aliases
+        concat::fragment { 'sudoers_host_aliases_header':
+            ensure  => $sudo::ensure,
+            target  => $sudo::configfile,
+            source => 'puppet:///modules/sudo/50-sudoers_host_aliases_header',
+            order   => 50,
+        }
 
         # Header of the Defaults specs
         concat::fragment { 'sudoers_default_specs_header':
             ensure  => $sudo::ensure,
-            target  => $sudo::params::configfile,
+            target  => $sudo::configfile,
             content => template('sudo/60-sudoers_default_specs.erb'),
             order   => 60,
         }
 
-
         # Header of the main part
         concat::fragment { 'sudoers_mainheader':
             ensure => $sudo::ensure,
-            target => $sudo::params::configfile,
+            target => $sudo::configfile,
             source => 'puppet:///modules/sudo/80-sudoers_main_header',
             order  => 80,
         }
@@ -104,12 +106,12 @@ class sudo::common {
             #
             concat::fragment { 'sudoers_footer_includedir':
                 ensure  => $sudo::ensure,
-                target  => $sudo::params::configfile,
+                target  => $sudo::configfile,
                 content => "\n#includedir ${sudo::params::configdir}\n",
                 order   => 99,
             }
 
-            file { $sudo::params::configdir:
+            file { $sudo::configdir:
                 ensure  => 'directory',
                 owner   => $sudo::params::configdir_owner,
                 group   => $sudo::params::configdir_group,
@@ -122,7 +124,7 @@ class sudo::common {
         # check the syntax of the sudoers files
         exec {$sudo::params::check_syntax_name:
             path        => '/usr/bin:/usr/sbin:/bin',
-            command     => "visudo -c -f ${sudo::params::configfile}",
+            command     => "visudo -c -f ${sudo::configfile}",
             returns     => 0,
             onlyif      => "test \"${sudo::ensure}\" == \"present\"",
             refreshonly => true,
@@ -135,8 +137,8 @@ class sudo::common {
         # here $sudo::ensure is 'absent'
 
         # # Restore old sudoers file (if it exists)
-        # exec { "restore ${sudo::params::configfile}":
-        #     command => "mv ${sudo::params::backupconfigfile} ${sudo::params::configfile}"
+        # exec { "restore ${sudo::configfile}":
+        #     command => "mv ${sudo::params::backupconfigfile} ${sudo::configfile}"
         #     path    => "/usr/bin:/usr/sbin:/bin",
         #     onlyif  => "test -f ${sudo::params::backupconfigfile}",
         #     #before  => Package['sudo'],

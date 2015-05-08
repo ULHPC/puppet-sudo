@@ -77,8 +77,8 @@ define sudo::alias::host(
     concat::fragment { "sudoers_host_aliases_${hostalias}":
         ensure  => $ensure,
         target  => $sudo::configfile,
-        content => inline_template("<% unless @comment.empty? %># <%= @comment %>\n<% end %>Host_Alias <%= hostalias.upcase %> = <%= hostlist.join(', ') %>\n"),
-        order   => $order,
+        content => inline_template("<% unless @comment.empty? %># <%= @comment %>\n<% end %>Host_Alias <%= @hostalias.upcase %> = <%= @hostlist.join(', ') %>\n"),
+        order   => 55,
         notify  => Exec[$sudo::params::check_syntax_name],
     }
 

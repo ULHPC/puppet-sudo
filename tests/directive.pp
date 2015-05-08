@@ -8,7 +8,9 @@
 #
 #   sudo puppet apply -t /vagrant/tests/directive.pp --noop
 
-include 'sudo'
+class { 'sudo':
+    configfile => '/tmp/sudoers'
+}
 
 sudo::directive {'vagrant':
     content => "vagrant ALL=NOPASSWD:ALL\n"

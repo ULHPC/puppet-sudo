@@ -94,7 +94,7 @@ define sudo::defaults::spec(
 
         concat::fragment { "sudoers_defaults_spec_${defaultname}":
             ensure  => $sudo::ensure,
-            target  => $sudo::params::configfile,
+            target  => $sudo::configfile,
             order   => 65,
             content => $real_content,
             source  => $real_source,

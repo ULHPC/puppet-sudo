@@ -89,7 +89,7 @@ define sudo::directive(
     if versioncmp($::sudoversion,'1.7.2') < 0 {
         concat::fragment { "sudoers_directive_${dname}":
             ensure  => $ensure,
-            target  => $sudo::params::configfile,
+            target  => $sudo::configfile,
             order   => 65,
             content => $real_content,
             source  => $real_source,
@@ -102,7 +102,7 @@ define sudo::directive(
         #
         # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
         #
-        file {"${sudo::params::configdir}/${dname}":
+        file {"${sudo::configdir}/${dname}":
             ensure  => $ensure,
             owner   => $sudo::params::configfile_owner,
             group   => $sudo::params::configfile_group,
@@ -110,7 +110,7 @@ define sudo::directive(
             content => $real_content,
             source  => $real_source,
             notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
-            require => File[$sudo::params::configdir],
+            require => File[$sudo::configdir],
             #Package['sudo'],
         }
 
