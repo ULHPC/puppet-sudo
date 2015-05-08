@@ -1,11 +1,11 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
   "description": "Manage sudo configuration via Puppet",
-  "license": "gpl-3.0",
+  "license": "GPL-3.0",
   "source": "https://github.com/ULHPC/puppet-sudo",
   "project_page": "https://github.com/ULHPC/puppet-sudo",
   "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
@@ -35,10 +35,10 @@
     "security"
   ],
   "classes": [
-    "sudo::params",
     "sudo",
     "sudo::common",
     "sudo::debian",
+    "sudo::params",
     "sudo::redhat"
   ],
   "definitions": [

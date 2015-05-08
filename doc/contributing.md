@@ -1,48 +1,46 @@
--*- mode: markdown; mode: auto-fill; fill-column: 80 -*-
+-*- mode: markdown; mode: visual-line; -*-
 
 # Sudo Puppet Module Developments
 
-If you want to contribute to the code, you shall be aware of the way this module
-is organized.   
+If you want to contribute to the code, you shall be aware of the way this module is organized.
 
 ### Directory Layout
 
-       ULHPC-sudo/       # Main directory 
+       ULHPC/sudo/       # Main directory 
            `-- metadata.json     # Module configuration - cf [here](https://docs.puppetlabs.com/puppet/latest/reference/modules_publishing.html#write-a-metadatajson-file)
            `-- README.md         # This file
            `-- files/            # Contains static files, which managed nodes can download
            `-- lib/              # custom facts/type/provider definitions
            `-- manifests/
-                `-- init.pp      # Main manifests file
-                `-- classes/     # Hold manifest for ULHPC-sudo classes/
-                     `-- ULHPC-sudo.pp         # defines the ULHPC-sudo class
-                     `-- ULHPC-sudo-params.pp  # ULHPC-sudo module variables 
-                `-- definitions/ # Hold manifest for ULHPC-sudo definitions
-                     `-- ULHPC-sudo-mydef.pp   # defines the ULHPC-sudo::mydef definition   `-- templates/        # Module ERB template files
+                `-- init.pp      # Main manifests file which defines the sudo class 
+                `-- params.pp    # ULHPC/sudo module variables 
+                `-- sudo.pp 
+                `-- common.pp 
+                `-- debian.pp 
+                `-- redhat.pp 
+                `-- alias/command.pp 
+                `-- alias/user.pp 
+                `-- defaults/spec.pp 
+                `-- directive.pp 
+           `-- templates/        # Module ERB template files
            `-- tests/            # Contains examples showing how to declare the module’s classes and defined type
-           `-- spec/             # Contains spec tests for any plugins in the lib directory
+           `-- spec/             # Contains rspec tests 
            `-- Rakefile          # Definition of the [rake](https://github.com/jimweirich/rake) tasks
            `-- .ruby-{version,gemset}   # [RVM](https://rvm.io/) configuration
            `-- Gemfile[.lock]    # [Bundler](http://bundler.io/) configuration
            `-- .git/             # Hold git configuration
+           `-- .vagrant_init.rb  # Vagrant provisionner to test this module
+           `-- Vagrantfile       # Vagrant file
 
 ### Git Branching Model
 
-The Git branching model for this repository follows the guidelines of
-[gitflow](http://nvie.com/posts/a-successful-git-branching-model/).  
-In particular, the central repository holds two main branches with an infinite
-lifetime:  
+The Git branching model for this repository follows the guidelines of [gitflow](http://nvie.com/posts/a-successful-git-branching-model/).
+In particular, the central repository holds two main branches with an infinite lifetime: 
 
-* `production`: the branch holding
-  tags of the successive releases of this tutorial 
-* `devel`: the main branch
-  where the sources are in a state with the latest delivered development changes 
-  for the next release. This is the *default* branch you get when you clone the
-  repository, and the one on which developments will take places.  
+* `production`: the branch holding   tags of the successive releases of this tutorial 
+* `devel`: the main branch where the sources are in a state with the latest delivered development changes for the next release. This is the *default* branch you get when you clone the repository, and the one on which developments will take places.
 
-You should therefore install [git-flow](https://github.com/nvie/gitflow), and
-probably also its associated
-[bash completion](https://github.com/bobthecow/git-flow-completion).  
+You should therefore install [git-flow](https://github.com/nvie/gitflow), and probably also its associated [bash completion](https://github.com/bobthecow/git-flow-completion).  
 
 ### Ruby, [RVM](https://rvm.io/) and [Bundler](http://bundler.io/)
 
@@ -59,39 +57,31 @@ The ruby stuff part of this repository corresponds to the following files:
   project as [gemset](https://rvm.io/gemsets) name
 * `Gemfile[.lock]`: used by `[bundle](http://bundler.io/)`
 
-You should now be able to access the list of available tasks by running:
+### Repository Setup
 
-	$> rake -T
+Then, to make your local copy of the repository ready to use the [git-flow](https://github.com/nvie/gitflow) workflow and the local [RVM](https://rvm.io/)  setup, you have to run the following commands once you cloned it for the first time: 
+
+      $> gem install bundler    # assuming it is not yet available
+	  $> bundle install
+	  $> rake -T                # To list the available tasks
+      $> rake setup 
 
 You probably wants to activate the bash-completion for rake tasks.
 I personnaly use the one provided [here](https://github.com/ai/rake-completion)
 
 Also, some of the tasks are hidden. Run `rake -T -A` to list all of them. 
 
-### Repository Setup
-
-Then, to make your local copy of the repository ready to use the
-[git-flow](https://github.com/nvie/gitflow) workflow and the local
-[RVM](https://rvm.io/)  setup, you have to run the following commands once you
-cloned it for the first time: 
-
-      $> rake setup 
-
 ### RSpec tests
 
-A set of unitary tests are defined to validate the different function of my
-library using [Rspec](http://rspec.info/) 
+A set of unitary tests are defined to validate the different function of my library using [Rspec](http://rspec.info/) 
 
 You can run these tests by issuing:
 
 	$> rake rspec  # NOT YET IMPLEMENTED
 	
-By conventions, you will find all the currently implemented tests in the `spec/`
-directory, in files having the `_spec.rb` suffix. This is expected from the
-`rspec` task of the `Rakefile`.    
+By conventions, you will find all the currently implemented tests in the `spec/` directory, in files having the `_spec.rb` suffix. This is expected from the `rspec` task of the `Rakefile`.
 
-**Important** Kindly stick to this convention, and feature tests for all
-  definitions/classes/modules you might want to add. 
+**Important** Kindly stick to this convention, and feature tests for all   definitions/classes/modules you might want to add. 
 
 ### Releasing mechanism
 
@@ -117,19 +107,18 @@ For more information on the version, run:
 
 If a new  version number such be bumped, you simply have to run:
 
-      $> rake version:bump:{major,minor,patch}
+     $> rake version:bump:{major,minor,patch}
 
 This will start the release process for you using `git-flow`.
 Then, to make the release effective, just run:
 
-      $> rake version:release
+     $> rake version:release
 
-This will finalize the release using `git-flow`, create the appropriate tag and
-merge all things the way they should be. 
+This will finalize the release using `git-flow`, create the appropriate tag and merge all things the way they should be. 
 
 # Contributing Notes
 
-This project is released under the terms of the [apache-2.0 Licence](LICENSE). 
+This project is released under the terms of the [GPL-3.0 Licence](LICENSE). 
 So you are more than welcome to contribute to its development as follows: 
 
 1. Fork it

@@ -64,7 +64,7 @@ define sudo::alias::command(
 
     concat::fragment { "sudoers_command_aliases_${groupname}":
         ensure  => $ensure,
-        target  => $sudo::params::configfile,
+        target  => $sudo::configfile,
         content => inline_template("## <%= @groupname.capitalize %>\nCmnd_Alias <%= @groupname.upcase %> = <%= @cmdlist.join(', ') %>\n"),
         order   => 45,
         notify  => Exec[$sudo::params::check_syntax_name],

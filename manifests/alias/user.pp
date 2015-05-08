@@ -24,6 +24,10 @@
 # [*userlist*]
 #  List of users to add in the definition of the alias
 #
+# [*order*]
+#   Placement order of the directive.
+#   Default: 25
+#
 # == Examples
 #
 #    sudo::alias::user{ 'ADMINS':
@@ -42,7 +46,8 @@
 #
 define sudo::alias::user(
     $userlist = [],
-    $ensure  = 'present'
+    $ensure   = 'present',
+    $order    = 25
 )
 {
     include sudo::params
@@ -62,9 +67,9 @@ define sudo::alias::user(
 
     concat::fragment { "sudoers_user_aliases_${groupname}":
         ensure  => $ensure,
-        target  => $sudo::params::configfile,
+        target  => $sudo::configfile,
         content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
-        order   => 25,
+        order   => $order,
         notify  => Exec[$sudo::params::check_syntax_name],
     }
 
