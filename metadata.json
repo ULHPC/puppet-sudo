@@ -1,55 +1,58 @@
 {
-    "name": "ULHPC/sudo",
-    "version": "0.3.0",
-    "author": "S. Varrette, H. Cartiaux, V. Plugaru",
-    "mail": "hpc-sysadmins@uni.lu",
-    "summary": "Configure and manage sudo and sudoers files",
-    "description": "Manage sudo configuration via Puppet",
-    "license": "GPL-3.0",
-    "source": "https://github.com/ULHPC/puppet-sudo",
-    "project_page": "https://github.com/ULHPC/puppet-sudo",
-    "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
-    "forge_url": "https://forge.puppetlabs.com/ULHPC/sudo",
-    "dependencies": [
-        {
-            "name": "puppetlabs-stdlib",
-            "version_requirement": ">=4.2.2 <5.0.0"
-        },
-        {
-            "name": "puppetlabs/concat",
-            "version_requirement": "1.x"
-        }
-    ],
-    "operatingsystem_support": [
-        {
-            "operatingsystem": "Debian",
-            "operatingsystemrelease": [
-                "6",
-                "7"
-            ]
-        },
-		{
-			"operatingsystem":"RedHat",
-			"operatingsystemrelease":[ "6.0", "7.0" ]
-		}
-    ],
-    "tags": [
-        "sudo",
-        "sudoers",
-        "security"
-    ],
-    "classes": [
-        "sudo",
-        "sudo::common",
-        "sudo::common::debian",
-        "sudo::common::redhat",
-        "sudo::params"
-    ],
-    "definitions": [
-        "sudo::alias::command",
-        "sudo::alias::host",
-        "sudo::alias::user",
-        "sudo::defaults::spec",
-        "sudo::directive"
-    ]
+  "name": "ULHPC/sudo",
+  "version": "0.3.1",
+  "author": "S. Varrette, H. Cartiaux, V. Plugaru",
+  "mail": "hpc-sysadmins@uni.lu",
+  "summary": "Configure and manage sudo and sudoers files",
+  "description": "Manage sudo configuration via Puppet",
+  "license": "GPL-3.0",
+  "source": "https://github.com/ULHPC/puppet-sudo",
+  "project_page": "https://github.com/ULHPC/puppet-sudo",
+  "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
+  "forge_url": "https://forge.puppetlabs.com/ULHPC/sudo",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">=4.2.2 <5.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": "1.x"
+    }
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0"
+      ]
+    }
+  ],
+  "tags": [
+    "sudo",
+    "sudoers",
+    "security"
+  ],
+  "classes": [
+    "sudo",
+    "sudo::common",
+    "sudo::common::debian",
+    "sudo::common::redhat",
+    "sudo::params"
+  ],
+  "definitions": [
+    "sudo::alias::command",
+    "sudo::alias::host",
+    "sudo::alias::user",
+    "sudo::defaults::spec",
+    "sudo::directive"
+  ]
 }
