@@ -21,8 +21,11 @@ It proposes to detail the following elements:
 * An [Overview](overview.md) of the module is proposed, describing the puppet classes and/or definitions it implements.
      - you might also wish to check the `tests/` directory for sample test cases 
 * How to [test this module with Vagrant](vagrant.md)
-* How to [contribute](contributing/) to this puppet module development.
+* How to [contribute](contributing/index.md) to this puppet module development. In particular, we detail:
+     - the [directory tree structure](contributing/layout.md)
+	 - the steps to follow to [setup this repository](contributing/setup.md)
+	 - information as regard the [semantic versioning](contributing/versioning.md) of this Puppet module. 
      - Apart form the directory layout, we will cover various configuration aspects ([git-flow](https://github.com/nvie/gitflow), [RVM](https://rvm.io/), [Bundler](http://bundler.io/) etc.)
 * Details on the [Read the Docs](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) management.
-* 
+
 

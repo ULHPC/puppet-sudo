@@ -51,13 +51,3 @@ By conventions, you will find all the currently implemented tests in the `spec/`
 
 **Important** Kindly stick to this convention, and feature tests for all   definitions/classes/modules you might want to add. 
 
-# Contributing Notes
-
-This project is released under the terms of the [GPL-3.0 Licence](LICENSE). 
-So you are more than welcome to contribute to its development as follows: 
-
-1. Fork it
-2. Create your feature branch (`rake git:feature:start[<feature_name>]`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git flow feature publish <feature_name>`)
-5. Create new Pull Request
