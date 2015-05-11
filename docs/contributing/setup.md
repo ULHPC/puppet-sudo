@@ -1,38 +1,4 @@
--*- mode: markdown; mode: visual-line; -*-
-
-# Sudo Puppet Module Developments
-
-If you want to contribute to the code, you shall be aware of the way this module is organized.
-
-### Directory Layout
-
-       ULHPC/sudo/       # Main directory 
-           `-- metadata.json     # Module configuration - cf [here](https://docs.puppetlabs.com/puppet/latest/reference/modules_publishing.html#write-a-metadatajson-file)
-           `-- README.md         # This file
-           `-- files/            # Contains static files, which managed nodes can download
-           `-- lib/              # custom facts/type/provider definitions
-           `-- manifests/
-                `-- init.pp      # Main manifests file which defines the sudo class 
-                `-- params.pp    # ULHPC/sudo module variables 
-                `-- common.pp
-				`-- common/
-				    `-- debian.pp
-					`-- redhat.pp 
-				`-- alias/
-				    `-- command.pp 
-					`-- /user.pp 
-				`-- defaults/
-					`-- spec.pp 
-                `-- directive.pp 
-           `-- templates/        # Module ERB template files
-           `-- tests/            # Contains examples showing how to declare the module’s classes and defined type
-           `-- spec/             # Contains rspec tests 
-           `-- Rakefile          # Definition of the [rake](https://github.com/jimweirich/rake) tasks
-           `-- .ruby-{version,gemset}   # [RVM](https://rvm.io/) configuration
-           `-- Gemfile[.lock]    # [Bundler](http://bundler.io/) configuration
-           `-- .git/             # Hold git configuration
-           `-- .vagrant_init.rb  # Vagrant provisionner to test this module
-           `-- Vagrantfile       # Vagrant file
+There is a number of pre-requisite programs / framework you shall install to be able to correctly contribute to this Puppet module.
 
 ### Git Branching Model
 
@@ -85,39 +51,6 @@ By conventions, you will find all the currently implemented tests in the `spec/`
 
 **Important** Kindly stick to this convention, and feature tests for all   definitions/classes/modules you might want to add. 
 
-### Releasing mechanism
-
-The operation consisting of releasing a new version of this repository is
-automated by a set of tasks within the `Rakefile`. 
-
-In this context, a version number have the following format:
-
-      <major>.<minor>.<patch>
-
-where:
-
-* `< major >` corresponds to the major version number
-* `< minor >` corresponds to the minor version number
-* `< patch >` corresponds to the patching version number
-
-Example: `1.2.0`
-
-The current version number is stored in the file `metadata.json`. 
-For more information on the version, run:
-
-     $> rake version:info
-
-If a new  version number such be bumped, you simply have to run:
-
-     $> rake version:bump:{major,minor,patch}
-
-This will start the release process for you using `git-flow`.
-Then, to make the release effective, just run:
-
-     $> rake version:release
-
-This will finalize the release using `git-flow`, create the appropriate tag and merge all things the way they should be. 
-
 # Contributing Notes
 
 This project is released under the terms of the [GPL-3.0 Licence](LICENSE). 
@@ -128,4 +61,3 @@ So you are more than welcome to contribute to its development as follows:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git flow feature publish <feature_name>`)
 5. Create new Pull Request
-

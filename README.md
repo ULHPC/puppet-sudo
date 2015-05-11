@@ -5,7 +5,7 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
-[![Documentation Status](https://readthedocs.org/projects/puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/puppet-sudo/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
 
 Configure and manage sudo and sudoers files
 
@@ -193,4 +193,8 @@ The `Vagrantfile` at the root of the repository pilot the provisioning various v
 
 See [`docs/vagrant.md`](vagrant.md) for more details. 
 
+## Online Documentation
 
+[Read the Docs](https://readthedocs.org/) aka RTFD hosts documentation for the open source community and the [ULHPC/sudo](https://github.com/ULHPC/puppet-sudo) puppet module has its documentation (see the `docs/` directly) hosted on [readthedocs](ulhpc-puppet-sudo.rtfd.org).
+
+See [`docs/rtfd.md`](rtfd.md) for more details.
