@@ -5,6 +5,7 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
+[![Documentation Status](https://readthedocs.org/projects/puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/puppet-sudo/?badge=latest)
 
 Configure and manage sudo and sudoers files
 
