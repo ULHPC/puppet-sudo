@@ -1,0 +1,6 @@
+site_name: ULHPC/sudo Puppet Module
+pages:
+- ['index.md', 'Overview']
+- ['vagrant.md', 'Tests with Vagrant']
+- ['contributing.md', 'Contributing']
+
