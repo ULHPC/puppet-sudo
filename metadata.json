@@ -1,6 +1,6 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
@@ -13,7 +13,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_range": ">= 1.0.0"
+      "version_requirement": ">=4.2.2 <5.0.0"
     },
     {
       "name": "puppetlabs/concat",
@@ -27,6 +27,13 @@
         "6",
         "7"
       ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0"
+      ]
     }
   ],
   "tags": [
@@ -37,12 +44,13 @@
   "classes": [
     "sudo",
     "sudo::common",
-    "sudo::debian",
-    "sudo::params",
-    "sudo::redhat"
+    "sudo::common::debian",
+    "sudo::common::redhat",
+    "sudo::params"
   ],
   "definitions": [
     "sudo::alias::command",
+    "sudo::alias::host",
     "sudo::alias::user",
     "sudo::defaults::spec",
     "sudo::directive"

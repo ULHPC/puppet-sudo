@@ -159,17 +159,3 @@ class sudo::common {
 
 
 }
-
-
-# ------------------------------------------------------------------------------
-# = Class: sudo::debian
-#
-# Specialization class for Debian systems
-class sudo::common::debian inherits sudo::common { }
-
-# ------------------------------------------------------------------------------
-# = Class: sudo::redhat
-#
-# Specialization class for Redhat systems
-class sudo::common::redhat inherits sudo::common { }
-

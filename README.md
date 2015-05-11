@@ -5,13 +5,14 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
+[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
 
 Configure and manage sudo and sudoers files
 
       Copyright (c) 2011-2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
       
 
-* [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
+* [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Docs]() --  [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
 
 ## Synopsis
 
@@ -36,7 +37,7 @@ All these components are configured through a set of variables you will find in
 [`manifests/params.pp`](manifests/params.pp). 
 
 _Note_: the various operations that can be conducted from this repository are piloted from a [`Rakefile`](https://github.com/ruby/rake) and assumes you have a running [Ruby](https://www.ruby-lang.org/en/) installation.
-See [`doc/contributing.md`](doc/contributing.md) for more details on the steps you shall follow to have this `Rakefile` working properly. 
+See `docs/contributing.md` for more details on the steps you shall follow to have this `Rakefile` working properly. 
 
 ## Dependencies
 
@@ -181,7 +182,7 @@ You can submit bug / issues / feature request using the [ULHPC/sudo Puppet Modul
 ## Developments / Contributing to the code 
 
 If you want to contribute to the code, you shall be aware of the way this module is organized. 
-These elements are detailed on [`doc/contributing.md`](doc/contributing.md)
+These elements are detailed on [`docs/contributing/`](contributing/)
 
 You are more than welcome to contribute to its development by [sending a pull request](https://help.github.com/articles/using-pull-requests). 
 
@@ -190,6 +191,10 @@ You are more than welcome to contribute to its development by [sending a pull re
 The best way to test this module in a non-intrusive way is to rely on [Vagrant](http://www.vagrantup.com/).
 The `Vagrantfile` at the root of the repository pilot the provisioning various vagrant boxes available on [Vagrant cloud](https://atlas.hashicorp.com/boxes/search?utf8=%E2%9C%93&sort=&provider=virtualbox&q=svarrette) you can use to test this module.
 
-See [`doc/vagrant.md`](doc/vagrant.md) for more details. 
+See [`docs/vagrant.md`](vagrant.md) for more details. 
 
+## Online Documentation
 
+[Read the Docs](https://readthedocs.org/) aka RTFD hosts documentation for the open source community and the [ULHPC/sudo](https://github.com/ULHPC/puppet-sudo) puppet module has its documentation (see the `docs/` directly) hosted on [readthedocs](ulhpc-puppet-sudo.rtfd.org).
+
+See [`docs/rtfd.md`](rtfd.md) for more details.
