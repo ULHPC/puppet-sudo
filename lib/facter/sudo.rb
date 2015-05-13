@@ -1,4 +1,5 @@
 Facter.add("sudoversion") do
+  confine :kernel => 'Linux'
   ENV["PATH"]="/bin:/sbin:/usr/bin:/usr/sbin"
 
   setcode do
