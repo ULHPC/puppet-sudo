@@ -1,8 +1,7 @@
 Facter.add("sudoversion") do
   confine :kernel => 'Linux'
-  ENV["PATH"]="/bin:/sbin:/usr/bin:/usr/sbin"
-
   setcode do
+    ENV["PATH"]="/bin:/sbin:/usr/bin:/usr/sbin"
     output = `sudo -V 2>&1`
     if $?.exitstatus.zero?
       m = /Sudo version ([\d\.]+)/.match output
