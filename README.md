@@ -5,14 +5,14 @@
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
-[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=stable)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=stable)
 
 Configure and manage sudo and sudoers files
 
       Copyright (c) 2011-2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
       
 
-* [Online Project Page](https://github.com/ULHPC/puppet-sudo)  -- [Docs]() --  [Sources](https://github.com/ULHPC/puppet-sudo) -- [Issues](https://github.com/ULHPC/puppet-sudo/issues)
+| [Project Page](https://github.com/ULHPC/puppet-sudo) | [Documentation](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Sources](https://github.com/ULHPC/puppet-sudo)  | [Issues](https://github.com/ULHPC/puppet-sudo/issues)  |
 
 ## Synopsis
 
@@ -103,7 +103,7 @@ This will create the following entry in the sudoers files:
 
 See also [`tests/alias/command.pp`](tests/alias/command.pp)
 
-### definition `sudo::alias::user`
+### Definition `sudo::alias::user`
 
 Permits to define a user alias in the sudoers files (directive User_Alias)
 These aren't often necessary, as you can use regular groups
@@ -128,7 +128,7 @@ This will create the following entry in the `sudoers` files:
 See also [`tests/alias/user.pp`](tests/alias/user.pp)
 
 
-### definition `sudo::defaults::spec`
+### Definition `sudo::defaults::spec`
 
 Permits to define a default specifications
 This definition accepts the following parameters:
