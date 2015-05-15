@@ -1,7 +1,7 @@
 {
   "name": "ULHPC/sudo",
   "version": "0.3.2",
-  "author": "S. Varrette, H. Cartiaux, V. Plugaru",
+  "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
   "description": "Manage sudo configuration via Puppet",
