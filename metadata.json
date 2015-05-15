@@ -10,6 +10,7 @@
   "project_page": "https://github.com/ULHPC/puppet-sudo",
   "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
   "forge_url": "https://forge.puppetlabs.com/ULHPC/sudo",
+  "docs_project": "ulhpc-puppet-sudo",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
@@ -54,6 +55,5 @@
     "sudo::alias::user",
     "sudo::defaults::spec",
     "sudo::directive"
-  ],
-  "docs_project": "ulhpc-puppet-sudo"
+  ]
 }
