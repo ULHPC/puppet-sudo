@@ -54,5 +54,6 @@
     "sudo::alias::user",
     "sudo::defaults::spec",
     "sudo::directive"
-  ]
+  ],
+  "docs_project": "ulhpc-puppet-sudo"
 }
