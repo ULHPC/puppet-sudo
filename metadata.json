@@ -1,6 +1,6 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
@@ -10,6 +10,7 @@
   "project_page": "https://github.com/ULHPC/puppet-sudo",
   "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
   "forge_url": "https://forge.puppetlabs.com/ULHPC/sudo",
+  "docs_project": "ulhpc-puppet-sudo",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
