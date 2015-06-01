@@ -88,7 +88,6 @@ define sudo::directive(
 
     if versioncmp($::sudoversion,'1.7.2') < 0 {
         concat::fragment { "sudoers_directive_${dname}":
-            ensure  => $ensure,
             target  => $sudo::configfile,
             order   => 65,
             content => $real_content,

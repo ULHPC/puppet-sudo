@@ -93,7 +93,6 @@ define sudo::defaults::spec(
     if $sudo::ensure == 'present' {
 
         concat::fragment { "sudoers_defaults_spec_${defaultname}":
-            ensure  => $sudo::ensure,
             target  => $sudo::configfile,
             order   => 65,
             content => $real_content,
