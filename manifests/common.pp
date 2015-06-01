@@ -53,7 +53,6 @@ class sudo::common {
 
         # Header of the file
         concat::fragment { 'sudoers_header':
-            ensure => $sudo::ensure,
             target => $sudo::configfile,
             source => 'puppet:///modules/sudo/01-sudoers_header',
             order  => 01,
@@ -61,7 +60,6 @@ class sudo::common {
 
         # Header of the User aliases
         concat::fragment { 'sudoers_user_aliases_header':
-            ensure => $sudo::ensure,
             target => $sudo::configfile,
             source => 'puppet:///modules/sudo/20-sudoers_user_aliases_header',
             order  => 20,
@@ -70,7 +68,6 @@ class sudo::common {
 
         # Header of the Command aliases
         concat::fragment { 'sudoers_command_aliases_header':
-            ensure  => $sudo::ensure,
             target  => $sudo::configfile,
             content => template('sudo/40-sudoers_command_aliases_header.erb'),
             order   => 40,
@@ -78,7 +75,6 @@ class sudo::common {
 
         # Header of the Host aliases
         concat::fragment { 'sudoers_host_aliases_header':
-            ensure => $sudo::ensure,
             target => $sudo::configfile,
             source => 'puppet:///modules/sudo/50-sudoers_host_aliases_header',
             order  => 50,
@@ -86,7 +82,6 @@ class sudo::common {
 
         # Header of the Defaults specs
         concat::fragment { 'sudoers_default_specs_header':
-            ensure  => $sudo::ensure,
             target  => $sudo::configfile,
             content => template('sudo/60-sudoers_default_specs.erb'),
             order   => 60,
@@ -94,7 +89,6 @@ class sudo::common {
 
         # Header of the main part
         concat::fragment { 'sudoers_mainheader':
-            ensure => $sudo::ensure,
             target => $sudo::configfile,
             source => 'puppet:///modules/sudo/80-sudoers_main_header',
             order  => 80,
@@ -105,7 +99,6 @@ class sudo::common {
             # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
             #
             concat::fragment { 'sudoers_footer_includedir':
-                ensure  => $sudo::ensure,
                 target  => $sudo::configfile,
                 content => "\n#includedir ${sudo::params::configdir}\n",
                 order   => 99,
