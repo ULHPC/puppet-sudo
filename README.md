@@ -9,7 +9,8 @@
 
 Configure and manage sudo and sudoers files
 
-      Copyright (c) 2011-2015 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. the UL HPC Management Team <hpc-sysadmins@uni.lu>
+       Copyright (c) 2011-2015 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka.
+                    the UL HPC Management Team <hpc-sysadmins@uni.lu>
       
 
 | [Project Page](https://github.com/ULHPC/puppet-sudo) | [Documentation](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Sources](https://github.com/ULHPC/puppet-sudo)  | [Issues](https://github.com/ULHPC/puppet-sudo/issues)  |
