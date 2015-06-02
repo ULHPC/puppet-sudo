@@ -6,6 +6,7 @@
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
 [![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=stable)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=stable)
+[![By ULHPC](https://img.shields.io/badge/by-ULHPC-blue.svg)](http://hpc.uni.lu)
 
 Configure and manage sudo and sudoers files
 
