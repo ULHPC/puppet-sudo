@@ -1,6 +1,6 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
@@ -14,7 +14,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">=4.2.2 <5.0.0"
+      "version_requirement": "4.x"
     },
     {
       "name": "puppetlabs/concat",
@@ -31,6 +31,13 @@
     },
     {
       "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6.0",
         "7.0"
