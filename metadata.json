@@ -1,6 +1,6 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
@@ -37,11 +37,11 @@
       ]
     },
     {
-       "operatingsystem": "CentOS",
-       "operatingsystemrelease": [
-         "6.0",
-         "7.0"
-       ]
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6.0",
+        "7.0"
+      ]
     }
   ],
   "tags": [
