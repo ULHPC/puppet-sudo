@@ -6,6 +6,7 @@
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
 [![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
+[![By ULHPC](https://img.shields.io/badge/by-ULHPC-blue.svg)](http://hpc.uni.lu)
 
       Copyright (c) 2011-2015 UL HPC Management Team <hpc-sysadmins@uni.lu>
 
