@@ -1,6 +1,6 @@
 {
   "name": "ULHPC/sudo",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
