@@ -83,7 +83,7 @@ define sudo::directive(
                 default: { $real_source = $source }
             }
         }
-        default: { $real_content = $content }
+        default: { $real_content = "${content}\n" }
     }
 
     if versioncmp($::sudoversion,'1.7.2') < 0 {
