@@ -67,7 +67,7 @@ define sudo::alias::user(
 
     concat::fragment { "sudoers_user_aliases_${groupname}":
         target  => $sudo::configfile,
-        content => inline_template("User_Alias <%= groupname.upcase %> = <%= userlist.join(', ') %>\n"),
+        content => inline_template("User_Alias <%= @groupname.upcase %> = <%= @userlist.join(', ') %>\n"),
         order   => $order,
         notify  => Exec[$sudo::params::check_syntax_name],
     }
