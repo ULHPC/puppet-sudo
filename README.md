@@ -10,7 +10,7 @@
 
 Configure and manage sudo and sudoers files
 
-       Copyright (c) 2011-2015 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka.
+       Copyright (c) 2011-2017 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl C. Parisot aka.
                     the UL HPC Management Team <hpc-sysadmins@uni.lu>
 
 
