@@ -94,25 +94,27 @@ class sudo::common {
             order  => 80,
         }
 
-        if versioncmp($::sudoversion,'1.7.1') > 0 {
+        if ($::sudoversion != undef) {
+          if versioncmp("$::sudoversion",'1.7.1') > 0 {
             #
             # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
             #
             concat::fragment { 'sudoers_footer_includedir':
-                target  => $sudo::configfile,
-                content => "\n#includedir ${sudo::params::configdir}\n",
-                order   => 99,
-            }
+            target  => $sudo::configfile,
+            content => "\n#includedir ${sudo::params::configdir}\n",
+            order   => 99,
+          }
 
-            file { $sudo::configdir:
-                ensure  => 'directory',
-                owner   => $sudo::params::configdir_owner,
-                group   => $sudo::params::configdir_group,
-                mode    => $sudo::params::configdir_mode,
-                purge   => true,
-                recurse => true,
-            }
+          file { $sudo::configdir:
+            ensure  => 'directory',
+            owner   => $sudo::params::configdir_owner,
+            group   => $sudo::params::configdir_group,
+            mode    => $sudo::params::configdir_mode,
+            purge   => true,
+            recurse => true,
+          }
         }
+      }
 
         # check the syntax of the sudoers files
         exec {$sudo::params::check_syntax_name:
