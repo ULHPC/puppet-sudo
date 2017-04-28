@@ -31,10 +31,7 @@ class sudo::params {
     ###########################################
 
     # ensure the presence (or absence) of sudo
-    $ensure = $::sudo_ensure ? {
-        ''      => 'present',
-        default => $::sudo_ensure
-    }
+    $ensure = 'present'
 
     #### MODULE INTERNAL VARIABLES  #########
     # (Modify to adapt to unsupported OSes)
@@ -54,7 +51,7 @@ class sudo::params {
     $backupconfigfile = $::operatingsystem ? {
         default => '/etc/.sudoers.puppet-save-orig',
     }
-    
+
     $configfile_mode = $::operatingsystem ? {
         default => '0440',
     }
@@ -86,7 +83,7 @@ class sudo::params {
     # name of the exec resource responsible for checking the syntax of the sudoers
     # file
     $check_syntax_name = 'sudoers-check-syntax'
-    
+
     $cmdalias_pkgmanager = $::operatingsystem ? {
         /(?i-mx:ubuntu|debian)/         => [ '/usr/bin/apt-get' ],
         /(?i-mx:centos|fedora|redhat)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
@@ -95,4 +92,3 @@ class sudo::params {
 
 
 }
-

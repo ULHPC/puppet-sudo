@@ -1,6 +1,6 @@
 -*- mode: markdown; mode: visual-line;  -*-
 
-# Sudo Puppet Module 
+# Sudo Puppet Module
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
@@ -10,9 +10,9 @@
 
 Configure and manage sudo and sudoers files
 
-       Copyright (c) 2011-2015 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka.
+       Copyright (c) 2011-2017 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl C. Parisot aka.
                     the UL HPC Management Team <hpc-sysadmins@uni.lu>
-      
+
 
 | [Project Page](https://github.com/ULHPC/puppet-sudo) | [Documentation](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Sources](https://github.com/ULHPC/puppet-sudo)  | [Issues](https://github.com/ULHPC/puppet-sudo/issues)  |
 
@@ -20,30 +20,30 @@ Configure and manage sudo and sudoers files
 
 Manage sudo configuration via Puppet.
 
-This module implements the following elements: 
+This module implements the following elements:
 
 * __Puppet classes__:
-    - `sudo`: main class 
-    - `sudo::common` 
-    - `sudo::common::debian`: specific implementation under Debian 
-    - `sudo::common::redhat`: specific implementation under Redhat-like system 
-    - `sudo::params`: class parameters 
+    - `sudo`: main class
+    - `sudo::common`
+    - `sudo::common::debian`: specific implementation under Debian
+    - `sudo::common::redhat`: specific implementation under Redhat-like system
+    - `sudo::params`: class parameters
 
-* __Puppet definitions__: 
-    - `sudo::alias::command`: defines a command alias in the sudoers files (directive `Cmnd_Alias`) 
-    - `sudo::alias::user`: defines a user alias in the sudoers files (directive `User_Alias`) 
-    - `sudo::defaults::spec`: defines a default specifications (directive `Defaults`) 
+* __Puppet definitions__:
+    - `sudo::alias::command`: defines a command alias in the sudoers files (directive `Cmnd_Alias`)
+    - `sudo::alias::user`: defines a user alias in the sudoers files (directive `User_Alias`)
+    - `sudo::defaults::spec`: defines a default specifications (directive `Defaults`)
     - `sudo::directive`: generic way to write sudoers configurations parts
 
 All these components are configured through a set of variables you will find in
-[`manifests/params.pp`](manifests/params.pp). 
+[`manifests/params.pp`](manifests/params.pp).
 
 _Note_: the various operations that can be conducted from this repository are piloted from a [`Rakefile`](https://github.com/ruby/rake) and assumes you have a running [Ruby](https://www.ruby-lang.org/en/) installation.
-See `docs/contributing.md` for more details on the steps you shall follow to have this `Rakefile` working properly. 
+See `docs/contributing.md` for more details on the steps you shall follow to have this `Rakefile` working properly.
 
 ## Dependencies
 
-See [`metadata.json`](metadata.json). In particular, this module depends on 
+See [`metadata.json`](metadata.json). In particular, this module depends on
 
 * [puppetlabs/stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
 * [puppetlabs/concat](https://forge.puppetlabs.com/puppetlabs/concat)
@@ -67,7 +67,7 @@ If you use a `sudo` version >= 1.7.2, the sudo directive part is validated via
 This definition accepts the following parameters:
 
 * `$ensure`: default to 'present', can be 'absent' (BEWARE: it will remove the
-  associated file) 
+  associated file)
 * `$content`: specify the contents of the directive as a string
 * `$source`: copy a file as the content of the directive.
 
@@ -77,7 +77,11 @@ Example:
            content => "%admin ALL=(ALL) ALL\n",
       }
 
-On recent version of sudo, this will typically create a new file `/etc/sudoers.d/admin_users`.
+      sudo::directive {'vagrant':
+        content => "%vagrant ALL=(ALL) NOPASSWD: ALL\n"
+      }
+
+On recent version of sudo, this will typically create a new file `/etc/sudoers.d/admin_users` (or `/etc/sudoers.d/vagrant`).
 
 See also [`tests/directive.pp`](tests/directive.pp)
 
@@ -89,10 +93,10 @@ These are groups of related commands...
 
 This definition accepts the following parameters:
 
-* `$ensure`: default to 'present', can be 'absent' 
+* `$ensure`: default to 'present', can be 'absent'
 * `$commandlist`: List of commands to add in the definition of the alias
 
-Example: 
+Example:
 
      sudo::alias::command{ 'NETWORK':
           cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
@@ -114,7 +118,7 @@ rather than `USERALIAS`
 
 This definition accepts the following parameters:
 
-* `$ensure`: default to 'present', can be 'absent' 
+* `$ensure`: default to 'present', can be 'absent'
 * `$commandlist`: list of users to add in the definition of the alias
 
 Example:
@@ -135,7 +139,7 @@ See also [`tests/alias/user.pp`](tests/alias/user.pp)
 Permits to define a default specifications
 This definition accepts the following parameters:
 
-* `$ensure`: default to 'present', can be 'absent' 
+* `$ensure`: default to 'present', can be 'absent'
 * `$content`: specify the contents of the directive as a string
 * `$source`: copy a file as the content of the directive.
 
@@ -171,29 +175,29 @@ You can of course configure the sudo module in your `Puppetfile` to make it avai
      # Modules from the Puppet Forge
      mod "ULHPC/sudo"
 
-or, if you prefer to work on the git version: 
+or, if you prefer to work on the git version:
 
-     mod "ULHPC/sudo", 
+     mod "ULHPC/sudo",
          :git => 'https://github.com/ULHPC/puppet-sudo',
-         :ref => 'production' 
+         :ref => 'production'
 
 ## Issues / Feature request
 
-You can submit bug / issues / feature request using the [ULHPC/sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues). 
+You can submit bug / issues / feature request using the [ULHPC/sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues).
 
-## Developments / Contributing to the code 
+## Developments / Contributing to the code
 
-If you want to contribute to the code, you shall be aware of the way this module is organized. 
+If you want to contribute to the code, you shall be aware of the way this module is organized.
 These elements are detailed on [`docs/contributing/`](contributing/)
 
-You are more than welcome to contribute to its development by [sending a pull request](https://help.github.com/articles/using-pull-requests). 
+You are more than welcome to contribute to its development by [sending a pull request](https://help.github.com/articles/using-pull-requests).
 
 ## Puppet modules tests within a Vagrant box
 
 The best way to test this module in a non-intrusive way is to rely on [Vagrant](http://www.vagrantup.com/).
 The `Vagrantfile` at the root of the repository pilot the provisioning various vagrant boxes available on [Vagrant cloud](https://atlas.hashicorp.com/boxes/search?utf8=%E2%9C%93&sort=&provider=virtualbox&q=svarrette) you can use to test this module.
 
-See [`docs/vagrant.md`](vagrant.md) for more details. 
+See [`docs/vagrant.md`](vagrant.md) for more details.
 
 ## Online Documentation
 
