@@ -95,7 +95,7 @@ class sudo::common {
         }
 
         if ($::sudoversion != undef) {
-          if versioncmp("$::sudoversion",'1.7.1') > 0 {
+          if versioncmp($::sudoversion,'1.7.1') > 0 {
             #
             # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
             #
