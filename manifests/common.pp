@@ -101,7 +101,7 @@ class sudo::common {
             #
             concat::fragment { 'sudoers_footer_includedir':
             target  => $sudo::configfile,
-            content => "\n#includedir ${sudo::params::configdir}\n",
+            content => "## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)\n#includedir ${sudo::params::configdir}\n",
             order   => 99,
           }
 
