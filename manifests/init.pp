@@ -57,8 +57,8 @@ class sudo(
     }
 
     case $::operatingsystem {
-        debian, ubuntu:         { include sudo::common::debian }
-        redhat, fedora, centos: { include sudo::common::redhat }
+        'debian', 'ubuntu':         { include ::sudo::common::debian }
+        'redhat', 'fedora', 'centos': { include ::sudo::common::redhat }
         default: {
             fail("Module ${module_name} is not supported on ${::operatingsystem}")
         }

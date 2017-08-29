@@ -47,7 +47,7 @@ define sudo::alias::command(
 )
 {
 
-    include sudo::params
+    include ::sudo::params
 
     # $name is provided by define invocation
     # guid of this entry
