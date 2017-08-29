@@ -9,8 +9,8 @@
 #   sudo puppet apply -t /vagrant/tests/alias/command.pp --noop
 #
 
-include 'sudo'
+include '::sudo'
 
 sudo::alias::command{ 'NETWORK':
-    cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ]
+    cmdlist => [ '/sbin/route', '/sbin/ifconfig', '/bin/ping', '/sbin/dhclient', '/sbin/iptables' ],
 }

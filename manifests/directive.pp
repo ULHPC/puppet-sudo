@@ -58,7 +58,7 @@ define sudo::directive(
     $ensure  = 'present'
 )
 {
-    include sudo::params
+    include ::sudo::params
 
     # $name is provided by define invocation
     # guid of this entry
@@ -78,7 +78,7 @@ define sudo::directive(
         '': {
             case $source {
                 '': {
-                    crit('No content nor source have been  specified')
+                    crit('No content nor source have been specified')
                 }
                 default: { $real_source = $source }
             }
@@ -120,7 +120,7 @@ define sudo::directive(
                 command     => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
                 returns     => 0,
                 logoutput   => 'on_failure',
-                refreshonly => true
+                refreshonly => true,
             }
 
         }

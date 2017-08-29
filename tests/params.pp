@@ -13,7 +13,7 @@
 #
 #
 
-include 'sudo::params'
+include '::sudo::params'
 
 $names = ['ensure', 'packagename', 'configfile', 'backupconfigfile', 'configfile_mode', 'configfile_owner', 'configfile_group', 'configdir', 'configdir_mode', 'configdir_owner', 'configdir_group', 'check_syntax_name', 'cmdalias_pkgmanager']
 

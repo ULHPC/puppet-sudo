@@ -9,19 +9,19 @@
 #   sudo puppet apply -t /vagrant/tests/alias/host.pp --noop
 #
 
-class { 'sudo':
-    configfile => '/tmp/sudoers'
+class { '::sudo':
+    configfile => '/tmp/sudoers',
 }
 
 sudo::alias::host{ 'SERVERS':
   hostlist => [ '192.168.0.1', '192.168.0.2' ],
-  comment  => 'This is all the servers'
+  comment  => 'This is all the servers',
 }
 sudo::alias::host{ 'NETWORK':
-  hostlist => [ '192.168.0.0/255.255.255.0' ]
+  hostlist => [ '192.168.0.0/255.255.255.0' ],
 }
 sudo::alias::host{ 'WORKSTATIONS':
   hostlist => [ 'NETWORK', '!SERVER' ],
-  comment  => 'This is every machine in the network that is not a server'
+  comment  => 'This is every machine in the network that is not a server',
 }
 
