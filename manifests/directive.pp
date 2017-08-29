@@ -78,7 +78,7 @@ define sudo::directive(
         '': {
             case $source {
                 '': {
-                    crit('No content nor source have been  specified')
+                    crit('No content nor source have been specified')
                 }
                 default: { $real_source = $source }
             }
