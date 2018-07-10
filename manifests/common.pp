@@ -140,14 +140,16 @@ class sudo::common {
         # }
 
         # Delete /etc/sudoers.d if sudo version >= 1.7.2
-        if versioncmp($::sudoversion,'1.7.1') > 0 {
+        if ($::sudoversion != undef) {
+            if versioncmp($::sudoversion,'1.7.1') > 0 {
 
-            file { $sudo::params::configdir:
-                ensure => 'absent',
-                force  => true,
-                #purge   => true,
-                #recurse => true,
-                #onlyif  => "test -d ${sudo::params::configdir}",
+                file { $sudo::params::configdir:
+                    ensure => 'absent',
+                    force  => true,
+                    #purge   => true,
+                    #recurse => true,
+                    #onlyif  => "test -d ${sudo::params::configdir}",
+                }
             }
         }
     }
