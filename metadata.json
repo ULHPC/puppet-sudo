@@ -14,7 +14,7 @@
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": "4.x"
+      "version_requirement": ">=4.0.0 < 6.0.0" 
     },
     {
       "name": "puppetlabs/concat",
@@ -26,7 +26,8 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
