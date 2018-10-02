@@ -16,12 +16,12 @@
 #
 
 node default {
-    class { 'sudo':
-        configfile => '/tmp/sudoers'
+    class { '::sudo':
+        configfile => '/tmp/sudoers',
     }
 
     sudo::directive {'vagrant':
-        content => "vagrant ALL=NOPASSWD:ALL\n"
+        content => "vagrant ALL=NOPASSWD:ALL\n",
     }
 
 }

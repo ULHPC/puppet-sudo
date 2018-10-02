@@ -9,10 +9,10 @@
 #   sudo puppet apply -t /vagrant/tests/alias/user.pp --noop
 #
 
-class { 'sudo':
-    configfile => '/tmp/sudoers'
+class { '::sudo':
+    configfile => '/tmp/sudoers',
 }
 
 sudo::alias::user{ 'ADMINS':
-    userlist => [ 'jsmith', 'mikem' ]
+    userlist => [ 'jsmith', 'mikem' ],
 }

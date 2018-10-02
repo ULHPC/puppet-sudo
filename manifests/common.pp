@@ -12,7 +12,7 @@
 class sudo::common {
 
     # Load the variables used in this module. Check the ssh-server-params.pp file
-    require sudo::params
+    require ::sudo::params
 
     # $package_ensure = $sudo::ensure ? {
     #     'absent' => 'purged',
@@ -48,14 +48,14 @@ class sudo::common {
             group   => $sudo::params::configfile_group,
             mode    => $sudo::params::configfile_mode,
             require => Package['sudo'],
-            notify  => Exec[$sudo::params::check_syntax_name]
+            notify  => Exec[$sudo::params::check_syntax_name],
         }
 
         # Header of the file
         concat::fragment { 'sudoers_header':
             target => $sudo::configfile,
             source => 'puppet:///modules/sudo/01-sudoers_header',
-            order  => 01,
+            order  => '01',
         }
 
         # Header of the User aliases
@@ -140,14 +140,16 @@ class sudo::common {
         # }
 
         # Delete /etc/sudoers.d if sudo version >= 1.7.2
-        if versioncmp($::sudoversion,'1.7.1') > 0 {
+        if ($::sudoversion != undef) {
+            if versioncmp($::sudoversion,'1.7.1') > 0 {
 
-            file { $sudo::params::configdir:
-                ensure => 'absent',
-                force  => true,
-                #purge   => true,
-                #recurse => true,
-                #onlyif  => "test -d ${sudo::params::configdir}",
+                file { $sudo::params::configdir:
+                    ensure => 'absent',
+                    force  => true,
+                    #purge   => true,
+                    #recurse => true,
+                    #onlyif  => "test -d ${sudo::params::configdir}",
+                }
             }
         }
     }
