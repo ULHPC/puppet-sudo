@@ -74,16 +74,20 @@ define sudo::directive(
     }
 
     # if content is passed, use that, else if source is passed use that
-    case $content {
-        '': {
-            case $source {
-                '': {
-                    crit('No content nor source have been specified')
-                }
-                default: { $real_source = $source }
-            }
+    $real_content = $content ? {
+        '' => undef,
+        default => $source ? {
+            ''      => $content,
+            default => undef
         }
-        default: { $real_content = "${content}\n" }
+    }
+
+    $real_source = $source ? {
+        '' => undef,
+        default => $content ? {
+            ''      => $source,
+            default => undef
+        }
     }
 
     if($::sudoversion != undef){
