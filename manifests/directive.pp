@@ -77,7 +77,7 @@ define sudo::directive(
     $real_content = $content ? {
         '' => undef,
         default => $source ? {
-            ''      => $content,
+            ''      => "${content}\n",
             default => undef
         }
     }
