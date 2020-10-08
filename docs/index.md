@@ -1,6 +1,6 @@
 -*- mode: markdown; mode: visual-line;  -*-
 
-# ULHPC/sudo Puppet Module
+# ULHPC-sudo Puppet Module
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
 [![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
@@ -8,13 +8,13 @@
 [![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
 [![By ULHPC](https://img.shields.io/badge/by-ULHPC-blue.svg)](http://hpc.uni.lu)
 
-      Copyright (c) 2017 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl, C. Parisot aka. UL HPC Management Team <hpc-sysadmins@uni.lu>
+      Copyright (c) 2020 UL HPC Team <hpc-sysadmins@uni.lu>
 
 | [Project Page](https://github.com/ULHPC/puppet-sudo) | [Documentation](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Issues](https://github.com/ULHPC/puppet-sudo/issues) |
 
 
 -----------
-The [ULHPC/sudo](https://github.com/ULHPC/puppet-sudo) puppet module has been designed to configure and manage sudo and sudoers files
+The [ULHPC-sudo](https://github.com/ULHPC/puppet-sudo) puppet module has been designed to configure and manage sudo and sudoers files
 
 This is the main page of the documentation for this Puppet module, which is hosted and managed by [Read the Docs](http://ulhpc-sudo.readthedocs.org/en/latest/).
 It proposes to detail the following elements:

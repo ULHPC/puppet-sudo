@@ -61,6 +61,7 @@
     "sudo::alias::command",
     "sudo::alias::host",
     "sudo::alias::user",
+    "sudo::conf",
     "sudo::defaults::spec",
     "sudo::directive"
   ]

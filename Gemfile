@@ -12,12 +12,12 @@ gem 'falkorlib' #, :path => '~/git/github.com/Falkor/falkorlib'
 group :test do
   gem "rake"
   gem "puppet", ENV['PUPPET_GEM_VERSION'] || '~> 4.4.0'
-  gem "rspec", '<= 3.2.0'
+  gem "rspec", '< 3.2.0'
   gem "rspec-puppet"
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "rspec-puppet-facts"
-  gem 'rubocop', '0.49.0'
+  gem 'rubocop',   '~> 0.51'
   gem 'simplecov', '>= 0.11.0'
   gem 'simplecov-console'
 
@@ -41,8 +41,8 @@ group :development do
  # gem "guard-rake"          if RUBY_VERSION >= '2.2.5' # per dependency https://rubygems.org/gems/ruby_dep
 end
 
-#group :system_tests do
-#  gem "beaker"
-#  gem "beaker-rspec"
-#  gem "beaker-puppet_install_helper"
-#end
+group :system_tests do
+  gem "beaker"
+  gem "beaker-rspec"
+  gem "beaker-puppet_install_helper"
+end
