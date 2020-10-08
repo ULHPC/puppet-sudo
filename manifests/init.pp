@@ -56,11 +56,11 @@ class sudo(
         default                       => "${sudo::configfile}.d"
     }
 
-    case $::operatingsystem {
-        'debian', 'ubuntu':         { include ::sudo::common::debian }
-        'redhat', 'fedora', 'centos': { include ::sudo::common::redhat }
+    case $facts['os']['family'] {
+        'Debian': { include ::sudo::common::debian }
+        'RedHat': { include ::sudo::common::redhat }
         default: {
-            fail("Module ${module_name} is not supported on ${::operatingsystem}")
+            fail("Module ${module_name} is not supported on ${facts['os']['family']}")
         }
     }
 }
