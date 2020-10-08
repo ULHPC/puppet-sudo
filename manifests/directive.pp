@@ -58,7 +58,7 @@ define sudo::directive(
     $ensure  = 'present'
 )
 {
-    include ::sudo::params
+    include sudo::params
 
     # $name is provided by define invocation
     # guid of this entry
@@ -77,7 +77,7 @@ define sudo::directive(
     $real_content = $content ? {
         '' => undef,
         default => $source ? {
-            ''      => $content,
+            ''      => "${content}\n",
             default => undef
         }
     }
@@ -102,32 +102,36 @@ define sudo::directive(
         }
         else
         {
-            # here sudo version >= 1.7.2
-            #
-            # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
-            #
-            file {"${sudo::configdir}/${dname}":
-                ensure  => $ensure,
-                owner   => $sudo::params::configfile_owner,
-                group   => $sudo::params::configfile_group,
-                mode    => $sudo::params::configfile_mode,
-                content => $real_content,
-                source  => $real_source,
-                notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
-                require => File[$sudo::configdir],
-                #Package['sudo'],
+            if $ensure == 'present' {
+                # here sudo version >= 1.7.2
+                #
+                # The #includedir directive is present to manage sudoers.d, version >= 1.7.2
+                #
+                file {"${sudo::configdir}/${dname}":
+                    ensure  => $ensure,
+                    owner   => $sudo::params::configfile_owner,
+                    group   => $sudo::params::configfile_group,
+                    mode    => $sudo::params::configfile_mode,
+                    content => $real_content,
+                    source  => $real_source,
+                    notify  => Exec["${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}"],
+                    require => File[$sudo::configdir],
+                    #Package['sudo'],
+                }
+            } else {
+                file {"${sudo::configdir}/${dname}":
+                    ensure => $ensure,
+                }
             }
-
             if $sudo::ensure == 'present' {
                 # check the syntax of the created files, delete it if the syntax is wrong
                 exec {"${sudo::params::check_syntax_name} for ${sudo::params::configdir}/${dname}":
                     path        => '/usr/bin:/usr/sbin:/bin',
-                    command     => "visudo -c -f ${sudo::params::configdir}/${dname} || ( rm -f ${sudo::params::configdir}/${dname} && exit 1)",
+                    command     => "visudo -cf ${sudo::params::configdir}/${dname} ||(rm -f ${sudo::params::configdir}/${dname} && exit 1)",
                     returns     => 0,
                     logoutput   => 'on_failure',
                     refreshonly => true,
                 }
-
             }
         }
     }

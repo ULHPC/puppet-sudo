@@ -16,7 +16,7 @@
 #
 
 node default {
-    class { '::sudo':
+    class { 'sudo':
         configfile => '/tmp/sudoers',
     }
 

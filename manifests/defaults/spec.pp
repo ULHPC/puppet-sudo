@@ -62,7 +62,7 @@ define sudo::defaults::spec(
     $ensure  = 'present'
 ) {
 
-    include ::sudo::params
+    include sudo::params
 
     # $name is provided by define invocation
     # guid of this entry

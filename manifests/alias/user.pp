@@ -50,7 +50,7 @@ define sudo::alias::user(
     $order    = 25
 )
 {
-    include ::sudo::params
+    include sudo::params
 
     # $name is provided by define invocation
     # guid of this entry

@@ -12,7 +12,7 @@
 class sudo::common {
 
     # Load the variables used in this module. Check the ssh-server-params.pp file
-    require ::sudo::params
+    require sudo::params
 
     # $package_ensure = $sudo::ensure ? {
     #     'absent' => 'purged',
@@ -101,7 +101,8 @@ class sudo::common {
             #
             concat::fragment { 'sudoers_footer_includedir':
             target  => $sudo::configfile,
-            content => "## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)\n#includedir ${sudo::params::configdir}\n",
+            content => "## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
+#includedir ${sudo::params::configdir}\n",
             order   => 99,
           }
 

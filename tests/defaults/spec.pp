@@ -9,7 +9,7 @@
 #   sudo puppet apply -t /vagrant/tests/defaults/spec.pp --noop
 #
 
-include '::sudo'
+include 'sudo'
 
 sudo::defaults::spec { 'env_keep':
         content => "

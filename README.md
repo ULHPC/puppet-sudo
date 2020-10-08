@@ -3,18 +3,16 @@
 # Sudo Puppet Module
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
-[![License](http://img.shields.io/:license-gpl3.0-blue.svg)](LICENSE)
+[![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
 ![Supported Platforms](http://img.shields.io/badge/platform-debian|redhat|centos-lightgrey.svg)
-[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=stable)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=stable)
-[![By ULHPC](https://img.shields.io/badge/by-ULHPC-blue.svg)](http://hpc.uni.lu)
+[![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-sudo/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-sudo/?badge=latest)
 
 Configure and manage sudo and sudoers files
 
-       Copyright (c) 2011-2017 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl C. Parisot aka.
-                    the UL HPC Management Team <hpc-sysadmins@uni.lu>
+      Copyright (c) 2020 UL HPC Team <hpc-sysadmins@uni.lu>
 
 
-| [Project Page](https://github.com/ULHPC/puppet-sudo) | [Documentation](http://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Sources](https://github.com/ULHPC/puppet-sudo)  | [Issues](https://github.com/ULHPC/puppet-sudo/issues)  |
+| [Project Page](https://github.com/ULHPC/puppet-sudo) | [Sources](https://github.com/ULHPC/puppet-sudo) | [Documentation](https://ulhpc-puppet-sudo.readthedocs.org/en/latest/) | [Issues](https://github.com/ULHPC/puppet-sudo/issues) |
 
 ## Synopsis
 
@@ -23,17 +21,19 @@ Manage sudo configuration via Puppet.
 This module implements the following elements:
 
 * __Puppet classes__:
-    - `sudo`: main class
+    - `sudo`
     - `sudo::common`
-    - `sudo::common::debian`: specific implementation under Debian
-    - `sudo::common::redhat`: specific implementation under Redhat-like system
-    - `sudo::params`: class parameters
+    - `sudo::common::debian`
+    - `sudo::common::redhat`
+    - `sudo::params`
 
 * __Puppet definitions__:
-    - `sudo::alias::command`: defines a command alias in the sudoers files (directive `Cmnd_Alias`)
-    - `sudo::alias::user`: defines a user alias in the sudoers files (directive `User_Alias`)
-    - `sudo::defaults::spec`: defines a default specifications (directive `Defaults`)
-    - `sudo::directive`: generic way to write sudoers configurations parts
+    - `sudo::alias::command`
+    - `sudo::alias::host`
+    - `sudo::alias::user`
+    - `sudo::conf`
+    - `sudo::defaults::spec`
+    - `sudo::directive`
 
 All these components are configured through a set of variables you will find in
 [`manifests/params.pp`](manifests/params.pp).
@@ -173,22 +173,22 @@ You can of course configure the sudo module in your `Puppetfile` to make it avai
 [r10k](https://github.com/adrienthebo/r10k) by adding the following entry:
 
      # Modules from the Puppet Forge
-     mod "ULHPC/sudo"
+     mod "ULHPC-sudo"
 
 or, if you prefer to work on the git version:
 
-     mod "ULHPC/sudo",
+     mod "ULHPC-sudo",
          :git => 'https://github.com/ULHPC/puppet-sudo',
          :ref => 'production'
 
 ## Issues / Feature request
 
-You can submit bug / issues / feature request using the [ULHPC/sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues).
+You can submit bug / issues / feature request using the [ULHPC-sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues).
 
 ## Developments / Contributing to the code
 
 If you want to contribute to the code, you shall be aware of the way this module is organized.
-These elements are detailed on [`docs/contributing/`](contributing/)
+These elements are detailed on [`docs/contributing.md`](contributing/index.md).
 
 You are more than welcome to contribute to its development by [sending a pull request](https://help.github.com/articles/using-pull-requests).
 
@@ -201,6 +201,13 @@ See [`docs/vagrant.md`](vagrant.md) for more details.
 
 ## Online Documentation
 
-[Read the Docs](https://readthedocs.org/) aka RTFD hosts documentation for the open source community and the [ULHPC/sudo](https://github.com/ULHPC/puppet-sudo) puppet module has its documentation (see the `docs/` directly) hosted on [readthedocs](ulhpc-puppet-sudo.rtfd.org).
+[Read the Docs](https://readthedocs.org/) aka RTFD hosts documentation for the open source community and the [ULHPC-sudo](https://github.com/ULHPC/puppet-sudo) puppet module has its documentation (see the `docs/` directly) hosted on [readthedocs](http://ulhpc-puppet-sudo.rtfd.org).
 
 See [`docs/rtfd.md`](rtfd.md) for more details.
+
+## Licence
+
+This project and the sources proposed within this repository are released under the terms of the [GPL-3.0](LICENCE) licence.
+
+
+[![Licence](https://www.gnu.org/graphics/gplv3-88x31.png)](LICENSE)

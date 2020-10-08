@@ -14,7 +14,8 @@
 #
 # == Parameters (cf sudo-params.pp)
 #
-# $ensure:: *Default*: 'present'. The Puppet ensure attribute (can be either 'present' or 'absent') - absent will ensure the sudo package is removed
+# $ensure:: *Default*: 'present'. The Puppet ensure attribute (can be either 'present' or 'absent')
+#                                 absent will ensure the sudo package is removed
 # $configfile:: *Default*: '/etc/sudoers'. The configuration file to use.
 #
 # == Requires
@@ -56,11 +57,11 @@ class sudo(
         default                       => "${sudo::configfile}.d"
     }
 
-    case $::operatingsystem {
-        'debian', 'ubuntu':         { include ::sudo::common::debian }
-        'redhat', 'fedora', 'centos': { include ::sudo::common::redhat }
+    case $facts['os']['family'] {
+        'Debian': { include sudo::common::debian }
+        'RedHat': { include sudo::common::redhat }
         default: {
-            fail("Module ${module_name} is not supported on ${::operatingsystem}")
+            fail("Module ${module_name} is not supported on ${facts['os']['family']}")
         }
     }
 }
