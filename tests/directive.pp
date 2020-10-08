@@ -8,7 +8,7 @@
 #
 #   sudo puppet apply -t /vagrant/tests/directive.pp --noop
 
-class { '::sudo':
+class { 'sudo':
     configfile => '/tmp/sudoers',
 }
 

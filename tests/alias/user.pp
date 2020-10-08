@@ -9,7 +9,7 @@
 #   sudo puppet apply -t /vagrant/tests/alias/user.pp --noop
 #
 
-class { '::sudo':
+class { 'sudo':
     configfile => '/tmp/sudoers',
 }
 

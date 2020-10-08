@@ -76,9 +76,9 @@ define sudo::conf(
     }
 
     sudo::directive {$dname:
-       ensure  => $ensure,
-       content => $content,
-       source  => $source,
+        ensure  => $ensure,
+        content => $content,
+        source  => $source,
     }
 
 
