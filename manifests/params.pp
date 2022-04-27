@@ -86,7 +86,7 @@ class sudo::params {
 
     $cmdalias_pkgmanager = $::operatingsystem ? {
         /(?i-mx:ubuntu|debian)/         => [ '/usr/bin/apt-get' ],
-        /(?i-mx:centos|fedora|redhat)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
+        /(?i-mx:centos|fedora|redhat|rocky)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
         default => []
     }
 
