@@ -36,7 +36,7 @@ class sudo::params {
     #### MODULE INTERNAL VARIABLES  #########
     # (Modify to adapt to unsupported OSes)
     #######################################
-    $packagename = $::operatingsystem ? {
+    $packagename = $facts['os']['name'] ? {
         default => 'sudo',
     }
 
@@ -44,39 +44,39 @@ class sudo::params {
     # custore fact 'sudoversion' (see lib/facter/sudo.rb)
 
     # main configuration file
-    $configfile = $::operatingsystem ? {
+    $configfile = $facts['os']['name'] ? {
         default => '/etc/sudoers',
     }
     # backup of the main configuration file
-    $backupconfigfile = $::operatingsystem ? {
+    $backupconfigfile = $facts['os']['name'] ? {
         default => '/etc/.sudoers.puppet-save-orig',
     }
 
-    $configfile_mode = $::operatingsystem ? {
+    $configfile_mode = $facts['os']['name'] ? {
         default => '0440',
     }
 
-    $configfile_owner = $::operatingsystem ? {
+    $configfile_owner = $facts['os']['name'] ? {
         default => 'root',
     }
 
-    $configfile_group = $::operatingsystem ? {
+    $configfile_group = $facts['os']['name'] ? {
         default => 'root',
     }
 
     # The next config dir only holds for sudo version >= 1.7.2
-    $configdir = $::operatingsystem ? {
+    $configdir = $facts['os']['name'] ? {
         default => '/etc/sudoers.d',
     }
-    $configdir_mode = $::operatingsystem ? {
+    $configdir_mode = $facts['os']['name'] ? {
         default => '0755',
     }
 
-    $configdir_owner = $::operatingsystem ? {
+    $configdir_owner = $facts['os']['name'] ? {
         default => 'root',
     }
 
-    $configdir_group = $::operatingsystem ? {
+    $configdir_group = $facts['os']['name'] ? {
         default => 'root',
     }
 
@@ -84,7 +84,7 @@ class sudo::params {
     # file
     $check_syntax_name = 'sudoers-check-syntax'
 
-    $cmdalias_pkgmanager = $::operatingsystem ? {
+    $cmdalias_pkgmanager = $facts['os']['name'] ? {
         /(?i-mx:ubuntu|debian)/         => [ '/usr/bin/apt-get' ],
         /(?i-mx:centos|fedora|redhat|rocky)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
         default => []

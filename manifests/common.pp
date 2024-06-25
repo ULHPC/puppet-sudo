@@ -94,8 +94,8 @@ class sudo::common {
             order  => 80,
         }
 
-        if ($::sudoversion != undef) {
-          if versioncmp($::sudoversion,'1.7.1') > 0 {
+        if ($facts['sudoversion'] != undef) {
+          if versioncmp($facts['sudoversion'],'1.7.1') > 0 {
             #
             # Use the #includedir directive to manage sudoers.d, version >= 1.7.2
             #
@@ -141,8 +141,8 @@ class sudo::common {
         # }
 
         # Delete /etc/sudoers.d if sudo version >= 1.7.2
-        if ($::sudoversion != undef) {
-            if versioncmp($::sudoversion,'1.7.1') > 0 {
+        if ($facts['sudoversion'] != undef) {
+            if versioncmp($facts['sudoversion'],'1.7.1') > 0 {
 
                 file { $sudo::params::configdir:
                     ensure => 'absent',

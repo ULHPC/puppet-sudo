@@ -90,8 +90,8 @@ define sudo::directive(
         }
     }
 
-    if($::sudoversion != undef){
-        if versioncmp($::sudoversion,'1.7.2') < 0 {
+    if($facts['sudoversion'] != undef){
+        if versioncmp($facts['sudoversion'],'1.7.2') < 0 {
             concat::fragment { "sudoers_directive_${dname}":
                 target  => $sudo::configfile,
                 order   => 65,
