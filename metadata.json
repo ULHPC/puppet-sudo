@@ -2,74 +2,63 @@
   "name": "ULHPC-sudo",
   "version": "0.4.9",
   "author": "UL HPC Team",
-  "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure and manage sudo and sudoers files",
-  "description": "Manage sudo configuration via Puppet",
   "license": "GPL-3.0",
   "source": "https://github.com/ULHPC/puppet-sudo",
   "project_page": "https://github.com/ULHPC/puppet-sudo",
   "issues_url": "https://github.com/ULHPC/puppet-sudo/issues",
-  "forge_url": "https://forge.puppetlabs.com/ULHPC/sudo",
-  "docs_project": "ulhpc-puppet-sudo",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">=4.0.0 < 6.0.0"
+      "version_requirement": ">=4.0.0 <10.0.0"
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">=1.2.0 < 5.0.0"
+      "version_requirement": ">=1.2.0 <5.0.0"
     }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "6",
-        "7",
-        "8"
+        "11",
+        "12",
+        "13"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6.0",
-        "7.0",
-        "8.0"
+        "7",
+        "8",
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "Rocky",
       "operatingsystemrelease": [
-        "8.0"
+        "8",
+        "9",
+        "10"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6.0",
-        "7.0"
+        "7"
       ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
     }
   ],
   "tags": [
     "sudo",
     "sudoers",
     "security"
-  ],
-  "classes": [
-    "sudo",
-    "sudo::common",
-    "sudo::common::debian",
-    "sudo::common::redhat",
-    "sudo::params"
-  ],
-  "definitions": [
-    "sudo::alias::command",
-    "sudo::alias::host",
-    "sudo::alias::user",
-    "sudo::conf",
-    "sudo::defaults::spec",
-    "sudo::directive"
   ]
 }
