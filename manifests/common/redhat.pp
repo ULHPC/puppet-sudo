@@ -7,4 +7,4 @@
 # = Class: sudo::common::debian
 #
 # Specialization class for Redhat systems
-class sudo::common::redhat inherits sudo::common { }
+class sudo::common::redhat inherits sudo::common {}

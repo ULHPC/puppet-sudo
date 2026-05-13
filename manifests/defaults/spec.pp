@@ -56,57 +56,49 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::defaults::spec(
-    $content='',
-    $source='',
-    $ensure  = 'present'
+define sudo::defaults::spec (
+  $content='',
+  $source='',
+  $ensure  = 'present'
 ) {
+  include sudo::params
 
-    include sudo::params
+  # $name is provided by define invocation
+  # guid of this entry
+  $defaultname = $name
 
-    # $name is provided by define invocation
-    # guid of this entry
-    $defaultname = $name
-
-    if ! ($ensure in [ 'present', 'absent' ]) {
-        fail("sudo::defaults::spec 'ensure' parameter must be set to either 'absent', or 'present'")
+  if ! ($ensure in ['present', 'absent']) {
+    fail("sudo::defaults::spec 'ensure' parameter must be set to either 'absent', or 'present'")
+  }
+  if ($sudo::ensure != $ensure) {
+    if ($sudo::ensure != 'present') {
+      fail("Cannot configure the sudo default spec '${defaultname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
     }
-    if ($sudo::ensure != $ensure) {
-        if ($sudo::ensure != 'present') {
-            fail("Cannot configure the sudo default spec '${defaultname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
-        }
+  }
+
+  $real_content = $content ? {
+    '' => undef,
+    default => $source ? {
+      ''      => $content,
+      default => undef
     }
+  }
 
-    $real_content = $content ? {
-        '' => undef,
-        default => $source ? {
-            ''      => $content,
-            default => undef
-        }
+  $real_source = $source ? {
+    '' => undef,
+    default => $content ? {
+      ''      => $source,
+      default => undef
     }
+  }
 
-    $real_source = $source ? {
-        '' => undef,
-        default => $content ? {
-            ''      => $source,
-            default => undef
-        }
+  if $sudo::ensure == 'present' {
+    concat::fragment { "sudoers_defaults_spec_${defaultname}":
+      target  => $sudo::configfile,
+      order   => 65,
+      content => $real_content,
+      source  => $real_source,
+      notify  => Exec[$sudo::params::check_syntax_name],
     }
-
-    if $sudo::ensure == 'present' {
-
-        concat::fragment { "sudoers_defaults_spec_${defaultname}":
-            target  => $sudo::configfile,
-            order   => 65,
-            content => $real_content,
-            source  => $real_source,
-            notify  => Exec[$sudo::params::check_syntax_name],
-        }
-
-    }
+  }
 }
-
-
-
-
-

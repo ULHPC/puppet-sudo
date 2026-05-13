@@ -7,4 +7,4 @@
 # = Class: sudo::common::debian
 #
 # Specialization class for Debian systems
-class sudo::common::debian inherits sudo::common { }
+class sudo::common::debian inherits sudo::common {}
