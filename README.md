@@ -1,5 +1,3 @@
--*- mode: markdown; mode: visual-line;  -*-
-
 # Sudo Puppet Module
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/sudo.svg)](https://forge.puppetlabs.com/ULHPC/sudo)
@@ -8,7 +6,7 @@
 
 Configure and manage sudo and sudoers files
 
-      Copyright (c) 2020 UL HPC Team <hpc-sysadmins@uni.lu>
+      Copyright (c) 2026 UL HPC Team <hpc-sysadmins@uni.lu>
 
 
 | [Project Page](https://github.com/ULHPC/puppet-sudo) | [Sources](https://github.com/ULHPC/puppet-sudo) | [Issues](https://github.com/ULHPC/puppet-sudo/issues) |
@@ -37,9 +35,6 @@ This module implements the following elements:
 All these components are configured through a set of variables you will find in
 [`manifests/params.pp`](manifests/params.pp).
 
-_Note_: the various operations that can be conducted from this repository are piloted from a [`Rakefile`](https://github.com/ruby/rake) and assumes you have a running [Ruby](https://www.ruby-lang.org/en/) installation.
-See `docs/contributing.md` for more details on the steps you shall follow to have this `Rakefile` working properly.
-
 ## Dependencies
 
 See [`metadata.json`](metadata.json). In particular, this module depends on
@@ -55,8 +50,6 @@ This is the main class defined in this module.
 Use it as follows:
 
      include ' sudo'
-
-See also [`tests/init.pp`](tests/init.pp)
 
 ### Definition `sudo::directive`
 
@@ -82,9 +75,6 @@ Example:
 
 On recent version of sudo, this will typically create a new file `/etc/sudoers.d/admin_users` (or `/etc/sudoers.d/vagrant`).
 
-See also [`tests/directive.pp`](tests/directive.pp)
-
-
 ### Definition `sudo::alias::command`
 
 Permits to define a command alias in the `sudoers` files (directive `Cmnd_Alias`)
@@ -105,8 +95,6 @@ This will create the following entry in the sudoers files:
 
      ## Networking
      Cmnd_Alias NETWORK = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /sbin/iptables
-
-See also [`tests/alias/command.pp`](tests/alias/command.pp)
 
 ### Definition `sudo::alias::user`
 
@@ -129,9 +117,6 @@ Example:
 This will create the following entry in the `sudoers` files:
 
       User_Alias ADMINS = jsmith, mikem
-
-See also [`tests/alias/user.pp`](tests/alias/user.pp)
-
 
 ### Definition `sudo::defaults::spec`
 
@@ -163,40 +148,27 @@ Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES
 Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE"
 ```
 
-See also [`tests/defaults/spec.pp`](tests/defaults/spec.pp)
-
-
 ## Librarian-Puppet / R10K Setup
 
 You can of course configure the sudo module in your `Puppetfile` to make it available with [Librarian puppet](http://librarian-puppet.com/) or
 [r10k](https://github.com/adrienthebo/r10k) by adding the following entry:
 
      # Modules from the Puppet Forge
-     mod "ULHPC-sudo"
+     mod "ULHPC/sudo"
 
 or, if you prefer to work on the git version:
 
-     mod "ULHPC-sudo",
+     mod "ULHPC/sudo",
          :git => 'https://github.com/ULHPC/puppet-sudo',
-         :ref => 'production'
+         :ref => 'main'
 
-## Issues / Feature request
+## Developments / Issues / Contributing to the code
 
-You can submit bug / issues / feature request using the [ULHPC-sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues).
+This Puppet Module has been implemented in the context of the [UL HPC](http://hpc.uni.lu) Platform of the [University of Luxembourg](http://www.uni.lu).
+It relies on [Vox Pupuli modulesync](https://github.com/voxpupuli/modulesync) for its organization.
 
-## Developments / Contributing to the code
-
-If you want to contribute to the code, you shall be aware of the way this module is organized.
-These elements are detailed on [`docs/contributing.md`](contributing/index.md).
-
+You can submit bugs / issues / feature requests using the [ULHPC-sudo Puppet Module Tracker](https://github.com/ULHPC/puppet-sudo/issues).
 You are more than welcome to contribute to its development by [sending a pull request](https://help.github.com/articles/using-pull-requests).
-
-## Puppet modules tests within a Vagrant box
-
-The best way to test this module in a non-intrusive way is to rely on [Vagrant](http://www.vagrantup.com/).
-The `Vagrantfile` at the root of the repository pilot the provisioning various vagrant boxes available on [Vagrant cloud](https://atlas.hashicorp.com/boxes/search?utf8=%E2%9C%93&sort=&provider=virtualbox&q=svarrette) you can use to test this module.
-
-See [`docs/vagrant.md`](vagrant.md) for more details.
 
 ## Licence
 

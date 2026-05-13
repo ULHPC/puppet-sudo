@@ -41,28 +41,26 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-class sudo(
+class sudo (
   $ensure     = $sudo::params::ensure,
   $configfile = $sudo::params::configfile
-  ) inherits sudo::params
-{
-    info ("Configuring sudo (with ensure = ${ensure})")
+) inherits sudo::params {
+  info ("Configuring sudo (with ensure = ${ensure})")
 
-    if ! ($ensure in [ 'present', 'absent' ]) {
-        fail("sudo 'ensure' parameter must be set to either 'absent' or 'present'")
-    }
+  if ! ($ensure in ['present', 'absent']) {
+    fail("sudo 'ensure' parameter must be set to either 'absent' or 'present'")
+  }
 
-    $configdir = $configfile ? {
-        "${sudo::params::configfile}" => $sudo::params::configdir,
-        default                       => "${sudo::configfile}.d"
-    }
+  $configdir = $configfile ? {
+    "${sudo::params::configfile}" => $sudo::params::configdir,
+    default                       => "${sudo::configfile}.d"
+  }
 
-    case $facts['os']['family'] {
-        'Debian': { include sudo::common::debian }
-        'RedHat': { include sudo::common::redhat }
-        default: {
-            fail("Module ${module_name} is not supported on ${facts['os']['family']}")
-        }
+  case $facts['os']['family'] {
+    'Debian': { include sudo::common::debian }
+    'RedHat': { include sudo::common::redhat }
+    default: {
+      fail("Module ${module_name} is not supported on ${facts['os']['family']}")
     }
+  }
 }
-

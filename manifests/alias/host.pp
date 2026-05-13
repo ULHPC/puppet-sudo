@@ -53,38 +53,29 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::alias::host(
+define sudo::alias::host (
   $hostlist = [],
   $comment  = '',
   $ensure  = 'present'
-)
-{
-    include sudo::params
+) {
+  include sudo::params
 
-    # $name is provided by define invocation
-    # guid of this entry
-    $hostalias = $name
+  # $name is provided by define invocation
+  # guid of this entry
+  $hostalias = $name
 
-    if ! ($ensure in [ 'present', 'absent' ]) {
-        fail("sudo::alias::host 'ensure' parameter must be set to either 'absent', or 'present'")
+  if ! ($ensure in ['present', 'absent']) {
+    fail("sudo::alias::host 'ensure' parameter must be set to either 'absent', or 'present'")
+  }
+  if ($sudo::ensure != $ensure) {
+    if ($sudo::ensure != 'present') {
+      fail("Cannot configure the sudo host alias '${hostalias}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
     }
-    if ($sudo::ensure != $ensure) {
-        if ($sudo::ensure != 'present') {
-            fail("Cannot configure the sudo host alias '${hostalias}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
-        }
-    }
+  }
 
-    concat::fragment { "sudoers_host_aliases_${hostalias}":
-        target  => $sudo::configfile,
-        content => inline_template("<% unless @comment.empty? %># <%= @comment %>\n<% end %>Host_Alias <%= @hostalias.upcase %> = <%= @hostlist.join(', ') %>\n"),
-        order   => 55,
-        notify  => Exec[$sudo::params::check_syntax_name],
-    }
-
-
-}
-
-
-
-
-
+  concat::fragment { "sudoers_host_aliases_${hostalias}":
+    target  => $sudo::configfile,
+    content => inline_template("<% unless @comment.empty? %># <%= @comment %>\n<% end %>Host_Alias <%= @hostalias.upcase %> = <%= @hostlist.join(', ') %>\n"),
+    order   => 55,
+    notify  => Exec[$sudo::params::check_syntax_name],
+} }

@@ -52,34 +52,30 @@
 #
 # [Remember: No empty lines between comments and class definition]
 #
-define sudo::conf(
-    $content        = '',
-    $source         = '',
-    $priority       = 0,
-    $sudo_file_name = '',
-    $ensure         = 'present'
-)
-{
-    if ($sudo_file_name != '') {
-        $dname = $sudo_file_name
-    } else {
-        $dname = $name
-    }
+define sudo::conf (
+  $content        = '',
+  $source         = '',
+  $priority       = 0,
+  $sudo_file_name = '',
+  $ensure         = 'present'
+) {
+  if ($sudo_file_name != '') {
+    $dname = $sudo_file_name
+  } else {
+    $dname = $name
+  }
 
-    if ! ($ensure in [ 'present', 'absent' ]) {
-        fail("sudo::directive 'ensure' parameter must be set to either 'absent', or 'present'")
+  if ! ($ensure in ['present', 'absent']) {
+    fail("sudo::directive 'ensure' parameter must be set to either 'absent', or 'present'")
+  }
+  if ($sudo::ensure != $ensure) {
+    if ($sudo::ensure != 'present') {
+      fail("Cannot configure the sudo directive '${dname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
     }
-    if ($sudo::ensure != $ensure) {
-        if ($sudo::ensure != 'present') {
-            fail("Cannot configure the sudo directive '${dname}' as sudo::ensure is NOT set to present (but ${sudo::ensure})")
-        }
-    }
+  }
 
-    sudo::directive {$dname:
-        ensure  => $ensure,
-        content => $content,
-        source  => $source,
-    }
-
-
-}
+  sudo::directive { $dname:
+    ensure  => $ensure,
+    content => $content,
+    source  => $source,
+} }

@@ -24,71 +24,67 @@
 # [Remember: No empty lines between comments and class definition]
 #
 class sudo::params {
+  ######## DEFAULTS FOR VARIABLES USERS CAN SET ##########################
+  # (Here are set the defaults, provide your custom variables externally)
+  # (The default used is in the line with '')
+  ###########################################
 
-    ######## DEFAULTS FOR VARIABLES USERS CAN SET ##########################
-    # (Here are set the defaults, provide your custom variables externally)
-    # (The default used is in the line with '')
-    ###########################################
+  # ensure the presence (or absence) of sudo
+  $ensure = 'present'
 
-    # ensure the presence (or absence) of sudo
-    $ensure = 'present'
+  #### MODULE INTERNAL VARIABLES  #########
+  # (Modify to adapt to unsupported OSes)
+  #######################################
+  $packagename = $facts['os']['name'] ? {
+    default => 'sudo',
+  }
 
-    #### MODULE INTERNAL VARIABLES  #########
-    # (Modify to adapt to unsupported OSes)
-    #######################################
-    $packagename = $facts['os']['name'] ? {
-        default => 'sudo',
-    }
+  # The actual version of the package is provided by the
+  # custore fact 'sudoversion' (see lib/facter/sudo.rb)
 
-    # The actual version of the package is provided by the
-    # custore fact 'sudoversion' (see lib/facter/sudo.rb)
+  # main configuration file
+  $configfile = $facts['os']['name'] ? {
+    default => '/etc/sudoers',
+  }
+  # backup of the main configuration file
+  $backupconfigfile = $facts['os']['name'] ? {
+    default => '/etc/.sudoers.puppet-save-orig',
+  }
 
-    # main configuration file
-    $configfile = $facts['os']['name'] ? {
-        default => '/etc/sudoers',
-    }
-    # backup of the main configuration file
-    $backupconfigfile = $facts['os']['name'] ? {
-        default => '/etc/.sudoers.puppet-save-orig',
-    }
+  $configfile_mode = $facts['os']['name'] ? {
+    default => '0440',
+  }
 
-    $configfile_mode = $facts['os']['name'] ? {
-        default => '0440',
-    }
+  $configfile_owner = $facts['os']['name'] ? {
+    default => 'root',
+  }
 
-    $configfile_owner = $facts['os']['name'] ? {
-        default => 'root',
-    }
+  $configfile_group = $facts['os']['name'] ? {
+    default => 'root',
+  }
 
-    $configfile_group = $facts['os']['name'] ? {
-        default => 'root',
-    }
+  # The next config dir only holds for sudo version >= 1.7.2
+  $configdir = $facts['os']['name'] ? {
+    default => '/etc/sudoers.d',
+  }
+  $configdir_mode = $facts['os']['name'] ? {
+    default => '0755',
+  }
 
-    # The next config dir only holds for sudo version >= 1.7.2
-    $configdir = $facts['os']['name'] ? {
-        default => '/etc/sudoers.d',
-    }
-    $configdir_mode = $facts['os']['name'] ? {
-        default => '0755',
-    }
+  $configdir_owner = $facts['os']['name'] ? {
+    default => 'root',
+  }
 
-    $configdir_owner = $facts['os']['name'] ? {
-        default => 'root',
-    }
+  $configdir_group = $facts['os']['name'] ? {
+    default => 'root',
+  }
 
-    $configdir_group = $facts['os']['name'] ? {
-        default => 'root',
-    }
+  # name of the exec resource responsible for checking the syntax of the sudoers
+  # file
+  $check_syntax_name = 'sudoers-check-syntax'
 
-    # name of the exec resource responsible for checking the syntax of the sudoers
-    # file
-    $check_syntax_name = 'sudoers-check-syntax'
-
-    $cmdalias_pkgmanager = $facts['os']['name'] ? {
-        /(?i-mx:ubuntu|debian)/         => [ '/usr/bin/apt-get' ],
-        /(?i-mx:centos|fedora|redhat|rocky)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
-        default => []
-    }
-
-
-}
+  $cmdalias_pkgmanager = $facts['os']['name'] ? {
+    /(?i-mx:ubuntu|debian)/         => ['/usr/bin/apt-get'],
+    /(?i-mx:centos|fedora|redhat|rocky)/ => ['/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum'],
+    default => []
+} }
