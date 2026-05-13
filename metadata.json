@@ -1,6 +1,6 @@
 {
   "name": "ULHPC-sudo",
-  "version": "0.4.9",
+  "version": "1.0.0",
   "author": "UL HPC Team",
   "summary": "Configure and manage sudo and sudoers files",
   "license": "GPL-3.0",
